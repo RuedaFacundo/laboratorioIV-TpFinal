@@ -9,7 +9,7 @@
                <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Company/ShowAddView">Agregar</a></li>
                     <li><a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Company/ShowListView">Listar</a></li>
-                    <li><a class="dropdown-item" href="#">Modificar</a></li>
+                    <li><a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Company/ShowModifyView">Modificar</a></li>
                </ul>
           </li>     
           <li class="nav-item dropdown">

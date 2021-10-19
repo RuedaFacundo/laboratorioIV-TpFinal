@@ -25,6 +25,13 @@
             require_once(VIEWS_PATH."company-list.php");
         }
 
+        public function ShowModifyView()
+        {
+            $companyList = $this->companyDAO->GetAll();
+
+            require_once(VIEWS_PATH."modify-company.php");
+        }
+
         public function Add($name, $cuit, $adress, $founded)
         {
             if($this->companyDAO->checkCompany($cuit) == null){
@@ -57,8 +64,26 @@
                 $this->companyDAO->remove($companyToDelete);
                 $this->ShowListView();
             } else {
-                echo "No se pudo eliminar la empresa";
+                echo "<script> if(alert('No se pudo eliminar la empresa')); </script>";
             }
         }
+
+        public function Modify($name, $cuit, $adress, $founded)
+        {
+            if($this->companyDAO->checkCompany($cuit) != null){
+                $companyModify = new Company();
+                $companyModify->setName($name);
+                $companyModify->setCuit($cuit);
+                $companyModify->setAdress($adress);
+                $companyModify->setFounded($founded);
+    
+                $this->companyDAO->modify($companyModify);
+            } else {
+                echo "<script> if(alert('No existe la empresa a modificar')); </script>";
+            }
+            $this->ShowListView();
+        }
+
+        
     }
 ?>

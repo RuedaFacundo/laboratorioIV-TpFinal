@@ -50,6 +50,22 @@
             $this->saveData();
         }
 
+        public function modify(Company $companyToModify){
+            
+            $this->RetrieveData();
+
+            foreach($this->companyList as $company){
+                if($company->getCuit() == $companyToModify->getCuit()){
+                    $company->setName($companyToModify->getName());
+                    $company->setCuit($companyToModify->getCuit());
+                    $company->setAdress($companyToModify->getAdress());
+                    $company->setFounded($companyToModify->getFounded());
+                }
+            }
+        
+            $this->saveData();
+        }
+
         private function SaveData()
         {
             $arrayToEncode = array();

@@ -34,7 +34,7 @@
                   <thead>
                     <tr>
                       <th style="width: 100px;">Cuit</th>
-                      <th style="width: 170px;">Accion</th>
+                      <th style="width: 170px; text-align: center">  Accion</th>
                     </tr>
                   </thead>
                   <tbody align=center>
@@ -51,6 +51,7 @@
                 </table>
               <form>
         </div>
+        
     </section>
 </main>
 <?php 

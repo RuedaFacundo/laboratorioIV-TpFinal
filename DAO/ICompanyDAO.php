@@ -9,5 +9,6 @@
         function GetAll();
         function remove(Company $companyToDelete);
         function checkCompany($cuit);
+        function modify(Company $companyToModify);
     }
 ?>
