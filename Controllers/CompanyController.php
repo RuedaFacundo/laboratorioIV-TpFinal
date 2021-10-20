@@ -83,7 +83,5 @@
             }
             $this->ShowListView();
         }
-
-        
     }
 ?>

@@ -30,6 +30,9 @@
                     <li><a class="dropdown-item" href="">Agregar</a></li>
                </ul>
           </li> 
+          <li class="nav-item">
+               <a class="nav-link" data-bs-toggle="" href="<?php echo FRONT_ROOT ?>User/Logout" role="button" aria-expanded="false">Cerrar sesion</a>
+          </li> 
      </ul>
 </nav>
 

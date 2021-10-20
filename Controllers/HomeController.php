@@ -5,9 +5,9 @@
     {
         public function Index($message = "")
         {
-            require_once(VIEWS_PATH."add-company.php");
+            require_once(VIEWS_PATH."home.php");
         }
-        
+        /*
         public function Login ($user){
             $get_data = $this->CallAPI('GET', 'https://utn-students-api.herokuapp.com/api/Student/', false);
             $response = json_decode($get_data, true);
@@ -52,6 +52,6 @@
             var_dump($result);
         
             return $result;
-        }
+        }*/
     }
 ?>
