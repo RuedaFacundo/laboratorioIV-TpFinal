@@ -14,6 +14,15 @@
             return $this->userList;
         }
 
+        public function Add(User $user)
+        {
+            $this->RetrieveData();
+            
+            array_push($this->userList, $user);
+
+            $this->SaveData();
+        }
+
         private function RetrieveData()
         {
             $this->userList = array();
@@ -32,6 +41,22 @@
                     array_push($this->userList, $user);
                 }
             }
+        }
+
+        private function SaveData()
+        {
+            $arrayToEncode = array();
+
+            foreach($this->userList as $user)
+            {
+                $valuesArray["username"] = $user->getUserName();
+
+                array_push($arrayToEncode, $valuesArray);
+            }
+
+            $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
+            
+            file_put_contents('Data/User.json', $jsonContent);
         }
     }
 ?>

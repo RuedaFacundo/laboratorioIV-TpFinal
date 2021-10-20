@@ -13,6 +13,11 @@
             $this->userDAO = new UserDAO();
         }
 
+        public function ShowAddView()
+        {
+            require_once(VIEWS_PATH."add-user.php");
+        }
+
         public function Login($user)
         {
             $arrayUsers =  $this->userDAO->GetAll();
@@ -37,6 +42,16 @@
             //session_start();
 			session_destroy();
 			require_once(VIEWS_PATH."home.php");
+        }
+
+        public function Add($username)
+        {
+            $user = new User();
+            $user->setUserName($username);
+
+            $this->userDAO->Add($user);
+
+            $this->ShowAddView();
         }
     }
 ?>
