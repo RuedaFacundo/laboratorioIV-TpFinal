@@ -21,37 +21,44 @@
         public function Login($user)
         {
             $arrayUsers =  $this->userDAO->GetAll();
+            $arrayStudents = $this->userDAO->GetAllApi();
             $loggedUser = NULL;
 
             foreach ($arrayUsers as $key => $value) {
-                if($user == $value->getUserName()){
-                        $loggedUser = $value;
+                if($user == $value->getEmail()){
+                    $loggedUser = $value;
                 }
             }
 
-            if($loggedUser != NULL){
-                //session_start();
-                $_SESSION['loggedUser'] = $loggedUser;
-                require_once(VIEWS_PATH."add-company.php");
-            }else{
+            foreach ($arrayStudents as $key => $value) {
+                if($user == $value->getEmail()){
+                    $loggedUser = $value;
+                }
+            }
+
+            if($loggedUser != NULL && $loggedUser->getActive() == true){
+                if($loggedUser->getProfile() == 'Student') {
+                    echo "se logeo un estudiante";
+                } else {
+                    $_SESSION['loggedUser'] = $loggedUser;
+                    require_once(VIEWS_PATH."add-company.php");
+                }
+            } else {
                 require_once(VIEWS_PATH."home.php");
             }
         }
 
         public function Logout () {
-            //session_start();
 			session_destroy();
 			require_once(VIEWS_PATH."home.php");
         }
 
-        public function Add($username)
+        /*public function Add($username)
         {
             $user = new User();
-            $user->setUserName($username);
-
+            $user->Email($username);
             $this->userDAO->Add($user);
-
             $this->ShowAddView();
-        }
+        }*/
     }
 ?>

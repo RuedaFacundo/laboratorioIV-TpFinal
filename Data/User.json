@@ -1,8 +1,16 @@
 [
     {
-        "username": "admin@utn.com.ar"
-    },
-    {
-        "username": "facundo@gmail.com"
+        "studentId": 0,
+        "careerId": 0,
+        "firstName": "Admin",
+        "lastName": "UTN",
+        "dni": 36617481,
+        "fileNumber": 2234831555,
+        "birthDate": "19/04/1992",
+        "gender": "M",
+        "email": "admin@utn.com.ar",
+        "phoneNumber": 2235378667,
+        "active": true,
+        "profile": "Admin"
     }
 ]
