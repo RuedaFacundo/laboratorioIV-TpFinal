@@ -1,3 +1,14 @@
 [
-
+    {
+        "name": "Movistar",
+        "cuit": "305060",
+        "adress": "Friuli 897",
+        "founded": "2021-10-19"
+    },
+    {
+        "name": "Claro",
+        "cuit": "3000",
+        "adress": "Av Independencia 5010",
+        "founded": "2021-10-12"
+    }
 ]

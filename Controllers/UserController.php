@@ -59,12 +59,22 @@
 			require_once(VIEWS_PATH."home.php");
         }
 
-        /*public function Add($username)
+        public function Add($name, $lastName, $email, $telephone, $gender, $birthDate, $cellphone, $dni, $profile)
         {
             $user = new User();
-            $user->Email($username);
+            $user->setFirstName($name);
+            $user->setLastName($lastName);
+            $user->setDni($dni);
+            $user->setEmail($email);
+            $user->setFileNumber($telephone);
+            $user->setGender($gender);
+            $user->setBirthDate($birthDate);
+            $user->setPhoneNumber($cellphone);
+            $user->setActive('active');
+            $user->setProfile($profile);
+
             $this->userDAO->Add($user);
             $this->ShowAddView();
-        }*/
+        }
     }
 ?>

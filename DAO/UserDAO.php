@@ -81,7 +81,7 @@
             file_put_contents('Data/User.json', $jsonContent);
         }
 
-        public function RetrieveDataApi ()
+        private function RetrieveDataApi ()
         {
             try {
                 $ch = curl_init();
