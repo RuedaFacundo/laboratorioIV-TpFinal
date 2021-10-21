@@ -18,6 +18,11 @@
             require_once(VIEWS_PATH."add-user.php");
         }
 
+        public function ShowProfileView()
+        {
+            require_once(VIEWS_PATH."student-profile.php");
+        }
+
         public function Login($user)
         {
             $arrayUsers =  $this->userDAO->GetAll();
@@ -38,7 +43,8 @@
 
             if($loggedUser != NULL && $loggedUser->getActive() == true){
                 if($loggedUser->getProfile() == 'Student') {
-                    echo "se logeo un estudiante";
+                    $_SESSION['loggedUser'] = $loggedUser;
+                    $this->ShowProfileView();
                 } else {
                     $_SESSION['loggedUser'] = $loggedUser;
                     require_once(VIEWS_PATH."add-company.php");

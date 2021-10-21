@@ -25,6 +25,13 @@
             require_once(VIEWS_PATH."company-list.php");
         }
 
+        public function ShowListViewStudent()
+        {
+            $companyList = $this->companyDAO->GetAll();
+
+            require_once(VIEWS_PATH."student-company.php");
+        }
+
         public function ShowModifyView()
         {
             $companyList = $this->companyDAO->GetAll();
