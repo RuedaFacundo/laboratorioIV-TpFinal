@@ -39,6 +39,18 @@
             require_once(VIEWS_PATH."modify-company.php");
         }
 
+        public function ShowCompanyView($name)
+        {
+            $company = $this->companyDAO->getCompanyName($name);
+            $companyList = $this->companyDAO->GetAll();
+            if($company != null){
+                require_once(VIEWS_PATH."company.php");
+            } else {
+                echo "<script> if(alert('No se encontro la empresa')); </script>";
+                require_once(VIEWS_PATH."student-company.php");
+            }
+        }
+
         public function Add($name, $cuit, $adress, $founded)
         {
             if($this->companyDAO->checkCompany($cuit) == null){

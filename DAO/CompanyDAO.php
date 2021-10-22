@@ -39,6 +39,17 @@
             return $companyCheck;
         }
 
+        public function getCompanyName($name)
+        {
+            $this->RetrieveData();
+
+            foreach($this->companyList as $company){
+                if($company->getName() == $name){
+                    return $company;
+                }
+            }
+        }
+
         public function remove(Company $companyToDelete){
             
             $this->RetrieveData();
