@@ -40,7 +40,7 @@
                         <tbody align=center>
                         <tr>
                             <td>
-                            <input type="text" name="nameCompany" style="height: 40px;" min="0">  
+                            <input type="text" name="nameCompany" style="height: 40px;" min="0" placeholder="Nombre de la empresa..">  
                             </td>
                             <td>
                             <input type="submit" class="btn" value="Buscar" style="background-color:#DC8E47;color:white;"/>

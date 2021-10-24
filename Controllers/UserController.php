@@ -29,18 +29,11 @@
             $arrayStudents = $this->userDAO->GetAllApi();
             $loggedUser = NULL;
 
-            foreach ($arrayUsers as $key => $value) {
-                if($user == $value->getEmail()){
-                    $loggedUser = $value;
-                }
+            $loggedUser = $this->Session($arrayUsers, $user);
+            if ($loggedUser == NULL){
+                $loggedUser = $this->Session($arrayStudents, $user);
             }
-
-            foreach ($arrayStudents as $key => $value) {
-                if($user == $value->getEmail()){
-                    $loggedUser = $value;
-                }
-            }
-
+            
             if($loggedUser != NULL && $loggedUser->getActive() == true){
                 if($loggedUser->getProfile() == 'Student') {
                     $_SESSION['loggedUser'] = $loggedUser;
@@ -75,6 +68,18 @@
 
             $this->userDAO->Add($user);
             $this->ShowAddView();
+        }
+
+        private function Session ($array, $user)
+        {
+            $loggedUser = NULL;
+
+            foreach ($array as $key => $value) {
+                if($user == $value->getEmail()){
+                    $loggedUser = $value;
+                }
+            }
+            return $loggedUser;
         }
     }
 ?>
