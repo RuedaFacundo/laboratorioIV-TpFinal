@@ -1,5 +1,5 @@
 <?php
-    require_once('nav-student.php');
+    require_once('nav.php');
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
@@ -8,44 +8,34 @@
             <table class="table">
                 <thead>
                     <tr class="table-primary">
-                        <th scope="col">Carrera</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido</th>
                         <th scope="col">DNI</th>
+                        <th scope="col">Telefono</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="table-light">
-                        <th><?php echo $_SESSION['loggedUser']->getCareerId() ?></th>
-                        <td><?php echo $_SESSION['loggedUser']->getFirstName() ?></td>
+                        <th><?php echo $_SESSION['loggedUser']->getFirstName() ?></th>
                         <td><?php echo $_SESSION['loggedUser']->getLastName() ?></td>
                         <td><?php echo $_SESSION['loggedUser']->getDni() ?></td>
+                        <td><?php echo $_SESSION['loggedUser']->getFileNumber() ?></td>
                     </tr>
                 </tbody>
                 <thead>
-                    <tr class="table-primary">
-                        <th scope="col">Telefono</th>
+                    <tr class="table-primary">                       
                         <th scope="col">Genero</th>
                         <th scope="col">Fecha de nacimiento</th>
                         <th scope="col">Celular</th>
+                        <th scope="col">Email</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="table-light">
-                        <th><?php echo $_SESSION['loggedUser']->getFileNumber() ?></th>
-                        <td><?php echo $_SESSION['loggedUser']->getGender() ?></td>
+                        <th><?php echo $_SESSION['loggedUser']->getGender() ?></th>
                         <td><?php echo $_SESSION['loggedUser']->getBirthDate() ?></td>
                         <td><?php echo $_SESSION['loggedUser']->getPhoneNumber() ?></td>
-                    </tr>
-                </tbody>
-                <thead>
-                    <tr class="table-primary">
-                        <th colspan="4" style="text-align:center;">Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="table-light">
-                        <td colspan="4" style="text-align:center;"><?php echo $_SESSION['loggedUser']->getEmail() ?></td>
+                        <td><?php echo $_SESSION['loggedUser']->getEmail() ?></td>
                     </tr>
                 </tbody>
             </table>

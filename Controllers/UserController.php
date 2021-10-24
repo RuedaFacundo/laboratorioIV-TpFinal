@@ -23,6 +23,11 @@
             require_once(VIEWS_PATH."student-profile.php");
         }
 
+        public function ShowAdminProfileView()
+        {
+            require_once(VIEWS_PATH."admin-profile.php");
+        }
+
         public function Login($user)
         {
             $arrayUsers =  $this->userDAO->GetAll();
@@ -40,7 +45,7 @@
                     $this->ShowProfileView();
                 } else {
                     $_SESSION['loggedUser'] = $loggedUser;
-                    require_once(VIEWS_PATH."add-company.php");
+                    require_once(VIEWS_PATH."admin-profile.php");
                 }
             } else {
                 require_once(VIEWS_PATH."home.php");
