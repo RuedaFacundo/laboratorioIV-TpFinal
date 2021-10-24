@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
     <span class="nav-item">
-        <strong><a class="nav-link" data-bs-toggle="" href="<?php echo FRONT_ROOT ?>User/ShowProfileView" role="button" aria-expanded="false">Perfil</a></strong>
+        <strong><a class="nav-link" data-bs-toggle="" href="<?php echo FRONT_ROOT ?>User/ShowProfileView" role="button" aria-expanded="false" style="color: rgba(255,255,255,.5);">Perfil</a></strong>
     </span>
 
     <ul class="navbar-nav ml-auto">

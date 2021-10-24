@@ -84,6 +84,7 @@
                 $this->ShowListView();
             } else {
                 echo "<script> if(alert('No se pudo eliminar la empresa')); </script>";
+                $this->ShowListView();
             }
         }
 
