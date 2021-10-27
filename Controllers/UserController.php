@@ -19,6 +19,7 @@
 
         public function ShowAddView()
         {
+            $careerList = $this->careerDAO->GetAllApi();
             require_once(VIEWS_PATH."add-user.php");
         }
 
