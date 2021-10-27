@@ -3,7 +3,7 @@
 
     use Models\JobPosition as JobPosition;
 
-    class JobPositionDAO
+    class JobPositionDAO implements IJobPositionDAO
     {
         private function RetrieveDataApi ()
         {
@@ -53,7 +53,7 @@
             return $jobPositionList;
         }
 
-        public function getById($id)
+        public function getById ($id)
         {
             $jobPositionList = $this->GetAllApi();
 

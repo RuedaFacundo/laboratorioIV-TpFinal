@@ -3,7 +3,7 @@
 
     use Models\Career as Career;
 
-    class CareerDAO
+    class CareerDAO implements ICareerDAO
     {
         private function RetrieveDataApi ()
         {
