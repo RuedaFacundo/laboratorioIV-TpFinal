@@ -63,7 +63,7 @@
 			require_once(VIEWS_PATH."home.php");
         }
 
-        public function Add($name, $lastName, $email, $telephone, $gender, $birthDate, $cellphone, $dni, $profile)
+        public function Add($name, $lastName, $email, $telephone, $gender, $birthDate, $cellphone, $dni, $profile, $careerId)
         {
             $user = new User();
             $user->setFirstName($name);
@@ -76,6 +76,7 @@
             $user->setPhoneNumber($cellphone);
             $user->setActive('active');
             $user->setProfile($profile);
+            $user->setCareerId($careerId);
 
             $this->userDAO->Add($user);
             $this->ShowAddView();

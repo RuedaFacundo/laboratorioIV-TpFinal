@@ -9,55 +9,55 @@
                 <div class="row">                         
                     <div class="col-lg-4">
                         <div class="form-group">
-                                <label for="">Nombre</label>
+                                <strong><label for="">Nombre</label></strong>
                                 <input type="text" name="name" value="" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                                <label for="">Apellido</label>
+                                <strong><label for="">Apellido</label></strong>
                                 <input type="text" name="lastName" value="" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                                <label for="">Email</label>
+                                <strong><label for="">Email</label></strong>
                                 <input type="email" name="email" value="" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                                <label for="">Telefono</label>
+                                <strong><label for="">Telefono</label></strong>
                                 <input type="number" name="telephone" value="" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                                <label for="">Genero</label>
+                                <strong><label for="">Genero</label></strong>
                                 <input type="text" name="gender" value="" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                                <label for="">Fecha de nacimiento</label>
+                                <strong><label for="">Fecha de nacimiento</label></strong>
                                 <input type="date" name="birthDate" value="" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                                <label for="">Celular</label>
+                                <strong><label for="">Celular</label></strong>
                                 <input type="number" name="cellphone" value="" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                                <label for="">DNI</label>
+                                <strong><label for="">DNI</label></strong>
                                 <input type="number" name="dni" value="" class="form-control">
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label for="profile">Perfil</label>
+                            <strong><label for="profile">Perfil</label></strong>
                             <select name="profile" class="form-control" aria-label="Default select example" required>
                                 <option value="Student">Estudiante</option>
                                 <option value="Admin">Administrador</option>
@@ -66,13 +66,13 @@
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <label for="career">Carrera</label>
-                            <select name="career" class="form-control" aria-label="Default select example" required>
+                            <strong><label for="careerId">Carrera</label></strong>
+                            <select name="careerId" class="form-control" aria-label="Default select example" required>
                                 <?php 
                                     foreach($careerList as $value){ 
                                         if($value->getActive() == true){
                                 ?>
-                                <option value="<?php echo $value->getDescription() ?>"><?php echo $value->getDescription() ?></option>
+                                <option value="<?php echo $value->getCareerId() ?>"><?php echo $value->getDescription() ?></option>
                                 <?php                              
                                         }    
                                     }
