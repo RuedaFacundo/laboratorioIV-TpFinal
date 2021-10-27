@@ -2,15 +2,19 @@
     namespace Controllers;
 
     use DAO\UserDAO as UserDAO;
+    use DAO\CareerDAO as CareerDAO;
     use Models\User as User;
+    use Models\Career as Career;
 
     class UserController
     {
         private $userDAO;
+        private $careerDAO;
 
         public function __construct()
         {
             $this->userDAO = new UserDAO();
+            $this->careerDAO = new careerDAO();
         }
 
         public function ShowAddView()
@@ -20,6 +24,7 @@
 
         public function ShowProfileView()
         {
+            $career =  $this->careerDAO->getById($_SESSION['loggedUser']->getCareerId());
             require_once(VIEWS_PATH."student-profile.php");
         }
 
