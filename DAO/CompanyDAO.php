@@ -1,121 +1,105 @@
 <?php
     namespace DAO;
 
+    use \Exception as Exception;
     use DAO\ICompanyDAO as ICompanyDAO;
-    use Models\Company as Company;
+    use Models\Company as Company;    
+    use DAO\Connection as Connection;
 
     class CompanyDAO implements ICompanyDAO
     {
-        private $companyList = array();
+        private $connection;
+        private $tableName = "companies";
 
         public function Add(Company $company)
         {
-            $this->RetrieveData();
-            
-            array_push($this->companyList, $company);
+            try
+            {
+                $query = "INSERT INTO ".$this->tableName." (name, cuit, adress, founded) VALUES (:name, :cuit, :adress, :founded);";
+                
+                $parameters["name"] = $company->getName();
+                $parameters["cuit"] = $company->getCuit();
+                $parameters["adress"] = $company->getAdress();
+                $parameters["founded"] = $company->getFounded();
 
-            $this->SaveData();
+                $this->connection = Connection::GetInstance();
+
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
+            }
         }
 
         public function GetAll()
         {
-            $this->RetrieveData();
-
-            return $this->companyList;
-        }
-
-        public function checkCompany($cuit)
-        {
-            $this->RetrieveData();
-
-            foreach($this->companyList as $company){
-                if($company->getCuit() == $cuit){
-                    $companyCheck = $company;
-                } else {
-                    $companyCheck = null;
-                }
-            }
-
-            return $companyCheck;
-        }
-
-        public function getCompanyName($name)
-        {
-            $this->RetrieveData();
-
-            foreach($this->companyList as $company){
-                if($company->getName() == $name){
-                    return $company;
-                }
-            }
-        }
-
-        public function remove(Company $companyToDelete){
-            
-            $this->RetrieveData();
-        
-            if(($index = array_search($companyToDelete, $this->companyList)) !== false){
-                unset($this->companyList[$index]);
-            }
-        
-            $this->saveData();
-        }
-
-        public function modify(Company $companyToModify){
-            
-            $this->RetrieveData();
-
-            foreach($this->companyList as $company){
-                if($company->getCuit() == $companyToModify->getCuit()){
-                    $company->setName($companyToModify->getName());
-                    $company->setCuit($companyToModify->getCuit());
-                    $company->setAdress($companyToModify->getAdress());
-                    $company->setFounded($companyToModify->getFounded());
-                }
-            }
-        
-            $this->saveData();
-        }
-
-        private function SaveData()
-        {
-            $arrayToEncode = array();
-
-            foreach($this->companyList as $company)
+            try
             {
-                $valuesArray["name"] = $company->getName();
-                $valuesArray["cuit"] = $company->getCuit();
-                $valuesArray["adress"] = $company->getAdress();
-                $valuesArray["founded"] = $company->getFounded();
+                $companyList = array();
 
-                array_push($arrayToEncode, $valuesArray);
-            }
+                $query = "SELECT * FROM ".$this->tableName;
 
-            $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-            
-            file_put_contents('Data/Company.json', $jsonContent);
-        }
+                $this->connection = Connection::GetInstance();
 
-        private function RetrieveData()
-        {
-            $this->companyList = array();
-
-            if(file_exists('Data/Company.json'))
-            {
-                $jsonContent = file_get_contents('Data/Company.json');
-
-                $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-                foreach($arrayToDecode as $valuesArray)
-                {
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
                     $company = new Company();
-                    $company->setName($valuesArray["name"]);
-                    $company->setCuit($valuesArray["cuit"]);
-                    $company->setAdress($valuesArray["adress"]);
-                    $company->setFounded($valuesArray["founded"]);
+                    $company->setName($row["name"]);
+                    $company->setCuit($row["cuit"]);
+                    $company->setAdress($row["adress"]);
+                    $company->setFounded($row["founded"]);
 
-                    array_push($this->companyList, $company);
+                    array_push($companyList, $company);
                 }
+
+                return $companyList;
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        function remove($cuit)
+        {
+            try
+            {
+                $query = "DELETE FROM ".$this->tableName." WHERE (cuit = :cuit)";
+    
+                $parameters["cuit"] =  $cuit;
+    
+                $this->connection = Connection::GetInstance();
+    
+                return $count=$this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        function modify(Company $company)
+        {
+            try
+            {
+                $query= "UPDATE ".$this->tableName." SET name = :name, cuit = :cuit, adress = :adress, founded = :founded
+                WHERE (cuit = :cuit)";
+    
+                $parameters['name']=$company->getName();
+                $parameters['cuit']=$company->getCuit();
+                $parameters['adress']=$company->getAdress();
+                $parameters['founded']=$company->getFounded();
+    
+                $this->connection = Connection::GetInstance();
+    
+                return $count= $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
             }
         }
     }

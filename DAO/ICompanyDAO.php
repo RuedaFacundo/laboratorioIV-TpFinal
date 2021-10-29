@@ -2,13 +2,13 @@
     namespace DAO;
 
     use Models\Company as Company;
+    use DAO\Connection as Connection;
 
     interface ICompanyDAO
     {
         function Add(Company $company);
         function GetAll();
-        function remove(Company $companyToDelete);
-        function checkCompany($cuit);
-        function modify(Company $companyToModify);
+        function remove($cuit);
+        function modify(Company $company);
     }
 ?>

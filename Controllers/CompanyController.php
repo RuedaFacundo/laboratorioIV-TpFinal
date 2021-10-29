@@ -53,54 +53,38 @@
 
         public function Add($name, $cuit, $adress, $founded)
         {
-            if($this->companyDAO->checkCompany($cuit) == null){
-                $company = new Company();
-                $company->setName($name);
-                $company->setCuit($cuit);
-                $company->setAdress($adress);
-                $company->setFounded($founded);
-    
-                $this->companyDAO->Add($company);
 
-                echo "<script> if(alert('Nueva empresa guardada')); </script>";
-            } else {
-                echo "<script> if(alert('La empresa ya existe')); </script>";
-            }
+            $company = new Company();
+            $company->setName($name);
+            $company->setCuit($cuit);
+            $company->setAdress($adress);
+            $company->setFounded($founded);
+    
+            $this->companyDAO->Add($company);
 
             $this->ShowAddView();
         }
 
-        public function Remove($codeToDelete)
+        public function Remove($cuit)
         {
-            $companyList = $this->companyDAO->GetAll();
-
-            foreach($companyList as $company){
-                if($company->getCuit() == $codeToDelete){
-                    $companyToDelete = $company;
-                }
-            }
-            if(isset($companyToDelete)){
-                $this->companyDAO->remove($companyToDelete);
+            try {
+                $this->companyDAO->remove($cuit);
                 $this->ShowListView();
-            } else {
-                echo "<script> if(alert('No se pudo eliminar la empresa')); </script>";
-                $this->ShowListView();
+            } catch (\PDOException $ex) {
+                throw $ex;
             }
         }
 
         public function Modify($name, $cuit, $adress, $founded)
         {
-            if($this->companyDAO->checkCompany($cuit) != null){
-                $companyModify = new Company();
-                $companyModify->setName($name);
-                $companyModify->setCuit($cuit);
-                $companyModify->setAdress($adress);
-                $companyModify->setFounded($founded);
-    
-                $this->companyDAO->modify($companyModify);
-            } else {
-                echo "<script> if(alert('No existe la empresa a modificar')); </script>";
-            }
+            $companyModify = new Company();
+            $companyModify->setName($name);
+            $companyModify->setCuit($cuit);
+            $companyModify->setAdress($adress);
+            $companyModify->setFounded($founded);
+
+            $this->companyDAO->modify($companyModify);
+
             $this->ShowListView();
         }
     }
