@@ -6,7 +6,7 @@
     interface IUserDAO
     {
         function Add(User $user);
-        function GetAll();
+        function GetAllStudents();
         function GetAllApi ();
     }
 ?>

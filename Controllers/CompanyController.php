@@ -41,7 +41,7 @@
 
         public function ShowCompanyView($name)
         {
-            $company = $this->companyDAO->getCompanyName($name);
+            $company = $this->companyDAO->GetByName($name);
             $companyList = $this->companyDAO->GetAll();
             if($company != null){
                 require_once(VIEWS_PATH."company.php");

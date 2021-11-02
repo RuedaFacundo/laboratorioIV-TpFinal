@@ -16,10 +16,10 @@
                 </thead>
                 <tbody>
                     <tr class="table-light">
-                        <th><?php echo $career->getDescription() ?></th>
-                        <td><?php echo $_SESSION['loggedUser']->getFirstName() ?></td>
-                        <td><?php echo $_SESSION['loggedUser']->getLastName() ?></td>
-                        <td><?php echo $_SESSION['loggedUser']->getDni() ?></td>
+                        <th><?php echo $career[0]['description'] ?></th>
+                        <td><?php echo $studentApi->getFirstName() ?></td>
+                        <td><?php echo $studentApi->getLastName() ?></td>
+                        <td><?php echo $studentApi->getDni() ?></td>
                     </tr>
                 </tbody>
                 <thead>
@@ -32,10 +32,10 @@
                 </thead>
                 <tbody>
                     <tr class="table-light">
-                        <th><?php echo $_SESSION['loggedUser']->getFileNumber() ?></th>
-                        <td><?php echo $_SESSION['loggedUser']->getGender() ?></td>
-                        <td><?php echo $_SESSION['loggedUser']->getBirthDate() ?></td>
-                        <td><?php echo $_SESSION['loggedUser']->getPhoneNumber() ?></td>
+                        <th><?php echo $studentApi->getFileNumber() ?></th>
+                        <td><?php echo $studentApi->getGender() ?></td>
+                        <td><?php echo $studentApi->getBirthDate() ?></td>
+                        <td><?php echo $studentApi->getPhoneNumber() ?></td>
                     </tr>
                 </tbody>
                 <thead>
@@ -45,7 +45,7 @@
                 </thead>
                 <tbody>
                     <tr class="table-light">
-                        <td colspan="4" style="text-align:center;"><?php echo $_SESSION['loggedUser']->getEmail() ?></td>
+                        <td colspan="4" style="text-align:center;"><?php echo $studentApi->getEmail() ?></td>
                     </tr>
                 </tbody>
             </table>

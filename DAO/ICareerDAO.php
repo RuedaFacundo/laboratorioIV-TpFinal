@@ -4,6 +4,6 @@
     interface ICareerDAO
     {
         function GetAllApi ();
-        function getById ($id);
+        function getById ($careerId);
     }
 ?>

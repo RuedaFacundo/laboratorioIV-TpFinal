@@ -107,14 +107,31 @@
             }
         }
 
-        public function getById($id)
+        public function getById($careerId)
         {
-            $careerList = $this->GetAllApi();
+            try
+            {
+                $careerList = array();
+                $query = "SELECT careers.description FROM ".$this->tableName. " WHERE (careerId = :careerId)";
 
-            foreach($careerList as $career){
-                if($career->getCareerId() == $id){
-                    return $career;
+                $parameters['careerId'] = $careerId;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query, $parameters);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $career['description'] = $row["description"];
+
+                    array_push($careerList, $career);
                 }
+
+                return $careerList;
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
             }
         }
     }

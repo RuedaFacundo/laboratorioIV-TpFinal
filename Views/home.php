@@ -9,15 +9,20 @@
             </header>
             <form action="<?php echo FRONT_ROOT ?>User/Login" method="POST" class="login-form bg-dark-alpha p-5 text-white">
                 <div class="form-group">
-                        <label for="user">Usuario</label>
-                        <input type="text" name="user" class="form-control form-control-lg" placeholder="Ingresar usuario">
+                        <label for="email">Usuario</label>
+                        <input type="text" name="email" class="form-control form-control-lg" placeholder="Ingresar usuario">
                 </div>
-                <!--<div class="form-group">
+                <div class="form-group">
                         <label for="password">Contrase&ntilde;a</label>
                         <input type="password" name="password" class="form-control form-control-lg" placeholder="Ingresar constrase&ntilde;a">
-                </div> -->
+                </div>
                 <button class="btn btn-dark btn-block btn-lg" type="submit">Iniciar Sesi&oacute;n</button>
             </form>
+            <div style="margin-top: 20px">
+                    <form action="<?php echo FRONT_ROOT ?>User/ShowRegisterView" method="POST" class="login-form bg-dark-alpha p-5 text-white">
+                        <button class="btn btn-dark btn-block btn-lg" type="submit">Registrarse</button>
+                    </form>
+            </div>
         </div>
     </main>
     <?php 

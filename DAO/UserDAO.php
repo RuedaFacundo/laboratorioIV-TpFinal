@@ -1,85 +1,15 @@
 <?php
     namespace DAO;
 
+    use DAO\IUserDAO as IUserDAO;
     use Models\User as User;
+    use \Exception as Exception;
+    use DAO\Connection as Connection;
 
     class UserDAO implements IUserDAO
     {
-        private $userList = array();
-
-        public function GetAll()
-        {
-            $this->RetrieveData();
-
-            return $this->userList;
-        }
-
-        public function Add(User $user)
-        {
-            $this->RetrieveData();
-            
-            array_push($this->userList, $user);
-
-            $this->SaveData();
-        }
-
-        private function RetrieveData()
-        {
-            $this->userList = array();
-
-            if(file_exists('Data/User.json'))
-            {
-                $jsonContent = file_get_contents('Data/User.json');
-
-                $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-                foreach($arrayToDecode as $valuesArray)
-                {
-                    $user = new User();
-                    $user->setStudentId($valuesArray['studentId']);
-                    $user->setCareerId($valuesArray['careerId']);
-                    $user->setFirstName($valuesArray['firstName']);
-                    $user->setLastName($valuesArray['lastName']);
-                    $user->setDni($valuesArray['dni']);
-                    $user->setFileNumber($valuesArray['fileNumber']);
-                    $user->setGender($valuesArray['gender']);
-                    $user->setBirthDate($valuesArray['birthDate']);
-                    $user->setEmail($valuesArray['email']);
-                    $user->setPhoneNumber($valuesArray['phoneNumber']);
-                    $user->setActive($valuesArray['active']);
-                    $user->setProfile($valuesArray['profile']);
-
-                    array_push($this->userList, $user);
-                }
-            }
-        }
-
-        private function SaveData()
-        {
-            $arrayToEncode = array();
-
-            foreach($this->userList as $user)
-            {
-                $valuesArray["studentId"] = $user->getStudentId();
-                $valuesArray["careerId"] = $user->getCareerId();
-                $valuesArray["firstName"] = $user->getFirstName();
-                $valuesArray["lastName"] = $user->getLastName();
-                $valuesArray["dni"] = $user->getDni();
-                $valuesArray["fileNumber"] = $user->getFileNumber();
-                $valuesArray["gender"] = $user->getGender();
-                $valuesArray["birthDate"] = $user->getBirthDate();
-                $valuesArray["email"] = $user->getEmail();
-                $valuesArray["phoneNumber"] = $user->getPhoneNumber();
-                $valuesArray["active"] = $user->getActive();
-                $valuesArray["profile"] = $user->getProfile();
-
-                array_push($arrayToEncode, $valuesArray);
-            }
-
-            $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-            
-            file_put_contents('Data/User.json', $jsonContent);
-        }
+        private $connection;
+        private $tableName = "users";
 
         private function RetrieveDataApi ()
         {
@@ -137,5 +67,98 @@
             }
             return $userList;
         }
+        
+        public function Add(User $user)
+        {
+            try
+            {
+                $query = "INSERT INTO ".$this->tableName." (email, password, profile) VALUES (:email, :password, :profile);";
+                
+                $parameters["email"] = $user->getEmail();
+                $parameters["password"] = $user->getPassword();
+                $parameters["profile"] = $user->getProfile();
+
+                $this->connection = Connection::GetInstance();
+
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
+            }
+        }
+        
+        public function GetAllStudents() 
+        {
+            try
+            {
+                $userList = array();
+
+                $query = "SELECT * FROM ".$this->tableName." WHERE (profile = 'Student')";
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $user = new User();
+                    $user->setEmail($row["email"]);
+                    $user->setPassword($row["password"]);
+                    $user->setProfile($row["profile"]);
+
+                    array_push($userList, $user);
+                }
+
+                return $userList;
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function GetAllAdmin() 
+        {
+            try
+            {
+                $userList = array();
+
+                $query = "SELECT * FROM ".$this->tableName." WHERE (profile = 'Admin')";
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $user = new User();
+                    $user->setEmail($row["email"]);
+                    $user->setPassword($row["password"]);
+                    $user->setProfile($row["profile"]);
+
+                    array_push($userList, $user);
+                }
+
+                return $userList;
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function GetApiByEmail ($email){
+            $studentList = $this->GetAllApi();
+            $student = null;
+
+            foreach($studentList as $value){
+                if ($value->getEmail() == $email){
+                    $student = $value;
+                }
+            }
+            return $student;
+        } 
+        
     }
 ?>

@@ -15,6 +15,7 @@
         private $phoneNumber;
         private $active;
         private $profile;
+        private $password;
 
         public function setStudentId($studentId) { $this->studentId = $studentId; }
         public function setCareerId($careerId) { $this->careerId = $careerId; }
@@ -28,6 +29,7 @@
         public function setPhoneNumber($phoneNumber) { $this->phoneNumber = $phoneNumber; }
         public function setActive($active) { $this->active = $active; }
         public function setProfile($profile) { $this->profile = $profile; }
+        public function setPassword($password) { $this->password = $password; }
 
         public function getStudentId () { return $this->studentId; }
         public function getCareerId () { return $this->careerId; }
@@ -41,6 +43,7 @@
         public function getPhoneNumber () { return $this->phoneNumber; }
         public function getActive () { return $this->active; }
         public function getProfile() { return $this->profile; }
+        public function getPassword() { return $this->password; }
     }
 ?>
 

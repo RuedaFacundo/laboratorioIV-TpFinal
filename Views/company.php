@@ -16,10 +16,10 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td><?php echo $company->getName() ?></td>
-                    <td><?php echo $company->getCuit() ?></td>
-                    <td><?php echo $company->getAdress() ?></td>
-                    <td><?php echo $company->getFounded() ?></td>
+                    <td><?php echo $company[0]->getName() ?></td>
+                    <td><?php echo $company[0]->getCuit() ?></td>
+                    <td><?php echo $company[0]->getAdress() ?></td>
+                    <td><?php echo $company[0]->getFounded() ?></td>
                 </tr>
             </tbody>
             </table>
