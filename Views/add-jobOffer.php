@@ -9,18 +9,18 @@
                 <div class="row">
                     <div class="col-lg-4">
                         <div class="form-group">
-                            <strong><label for="cuitCompany">Empresa</label></strong>
-                            <select name="cuitCompany" class="form-control" aria-label="Default select example" required>
+                            <strong><label for="nameCompany">Empresa</label></strong>
+                            <select name="nameCompany" class="form-control" aria-label="Default select example" required>
                                 <?php 
                                     foreach($companyList as $value){ 
                                 ?>
-                                <option value="<?php echo $value->getCuit() ?>"><?php echo $value->getName() ?></option>
+                                <option value="<?php echo $value->getName() ?>"><?php echo $value->getName() ?></option>
                                 <?php                              
                                     }
                                 ?>
                             </select>
                         </div>
-                    </div>                         
+                    </div>                          
                     <div class="col-lg-4">
                         <div class="form-group">
                             <strong><label for="jobPositionId">Puesto laboral</label></strong>

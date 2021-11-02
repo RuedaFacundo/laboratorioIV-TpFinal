@@ -63,6 +63,40 @@
             }
         }
 
+        public function GetByName($name)
+        {
+            try
+            {
+                $companyList = array();
+                $toLowerCase = strtolower($name);
+                $query = "SELECT * FROM ".$this->tableName. " WHERE (name = :name)";
+
+                $parameters['name'] = $toLowerCase;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query, $parameters);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $company = new Company();
+                    $company->setCompanyId($row["copmanyId"]);
+                    $company->setName($row["name"]);
+                    $company->setCuit($row["cuit"]);
+                    $company->setAdress($row["adress"]);
+                    $company->setFounded($row["founded"]);
+
+                    array_push($companyList, $company);
+                }
+
+                return $companyList;
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
+            }
+        }
+
         function remove($cuit)
         {
             try

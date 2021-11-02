@@ -3,11 +3,14 @@
 
     class Company 
     {
+        private $companyId;
         private $name;
         private $cuit;
         private $adress;
         private $founded;
 
+        public function getCompanyId() { return $this->companyId; }
+        public function setCompanyId($companyId) { $this->companyId = $companyId; }
         public function getName() { return $this->name; }
         public function setName($name) { $this->name = $name; }
         public function getCuit() { return $this->cuit; }

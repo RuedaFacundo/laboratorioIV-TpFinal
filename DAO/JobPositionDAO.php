@@ -2,9 +2,35 @@
     namespace DAO;
 
     use Models\JobPosition as JobPosition;
+    use \Exception as Exception;
+    use DAO\Connection as Connection;
+    use Models\Career as Career;
 
     class JobPositionDAO implements IJobPositionDAO
     {
+        private $connection;
+        private $tableName = "jobpositions";
+
+        private function Add(JobPosition $jobPosition)
+        {
+            try
+            {
+                $query = "INSERT INTO ".$this->tableName." (jobPositionId, careerId, description) VALUES (:jobPositionId, :careerId, :description);";
+                
+                $parameters["jobPositionId"] = $jobPosition->getJobPositionId();
+                $parameters["careerId"] = $jobPosition->getCareerId();
+                $parameters["description"] = $jobPosition->getDescription();
+
+                $this->connection = Connection::GetInstance();
+
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
+            }
+        }
+
         private function RetrieveDataApi ()
         {
             try {
@@ -40,7 +66,6 @@
         public function GetAllApi ()
         {
             $jsonApi = $this->RetrieveDataApi();
-            $jobPositionList = array();
 
             foreach($jsonApi as $value){
                 $jobPosition = new JobPosition ();
@@ -48,9 +73,40 @@
                 $jobPosition->setCareerId($value['careerId']);
                 $jobPosition->setDescription($value['description']);
 
-                array_push($jobPositionList, $jobPosition);
+                $this->Add($jobPosition);
             }
-            return $jobPositionList;
+
+            return $jsonApi;
+        }
+
+        public function GetAll()
+        {
+            try
+            {
+                $jobPositionList = array();
+
+                $query = "SELECT * FROM ".$this->tableName;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $jobPosition = new JobPosition();
+                    $jobPosition->setJobPositionId($row["jobPositionId"]);
+                    $jobPosition->setCareerId($row["careerId"]);
+                    $jobPosition->setDescription($row["description"]);
+
+                    array_push($jobPositionList, $jobPosition);
+                }
+
+                return $jobPositionList;
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
+            }
         }
 
         public function getById ($id)

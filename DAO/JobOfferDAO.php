@@ -2,108 +2,71 @@
     namespace DAO;
 
     use Models\JobOffer as JobOffer;
+    use \Exception as Exception;
+    use DAO\Connection as Connection;
 
     class JobOfferDAO 
     {
-        private $jobOfferList = array();
+        private $connection;
+        private $tableName = "jobOffers";
+        private $tableJobPosition = "jobPositions";
+        private $tableCompany = "companies";
 
         public function Add(JobOffer $jobOffer)
         {
-            $this->RetrieveData();
-            
-            array_push($this->jobOfferList, $jobOffer);
+            try
+            {
+                $query = "INSERT INTO ".$this->tableName." (jobPositionId, copmanyId, datePublished, remote, salary, skills, projectDescription, active) VALUES (:jobPositionId, :copmanyId, :datePublished, :remote, :salary, :skills, :projectDescription, :active);";
+                
+                $parameters["jobPositionId"] = $jobOffer->getJobPositionId();
+                $parameters["copmanyId"] = $jobOffer->getCompanyId();
+                $parameters["datePublished"] = $jobOffer->getDatePublished();
+                $parameters["remote"] = $jobOffer->getRemote();
+                $parameters["salary"] = $jobOffer->getSalary();
+                $parameters["skills"] = $jobOffer->getSkills();
+                $parameters["projectDescription"] = $jobOffer->getProjectDescription();
+                $parameters["active"] = $jobOffer->getActive();
 
-            $this->SaveData();
+                $this->connection = Connection::GetInstance();
+
+                $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
+            }
         }
 
         public function GetAll()
         {
-            $this->RetrieveData();
-
-            return $this->jobOfferList;
-        }
-
-        public function remove(JobOffer $jobOfferToDelete){
-            
-            $this->RetrieveData();
-        
-            if(($index = array_search($jobOfferToDelete, $this->jobOfferList)) !== false){
-                unset($this->jobOfferList[$index]);
-            }
-        
-            $this->saveData();
-        }
-
-        public function modify(JobOffer $jobOfferToModify){
-            
-            $this->RetrieveData();
-
-            foreach($this->jobOfferList as $jobOffer){
-                if($jobOffer->getJobOfferId() == $jobOfferToModify->getJobOfferId()){
-                    $jobOffer->setJobPositionId($jobOfferToModify->getJobPositionId());
-                    $jobOffer->setCuitCompany($jobOfferToModify->getCuitCompany());
-                    $jobOffer->setDatePublished($jobOfferToModify->getDatePublished());
-                    $jobOffer->setRemote($jobOfferToModify->getRemote());
-                    $jobOffer->setSalary($jobOfferToModify->getSalary());
-                    $jobOffer->setSkills($jobOfferToModify->getSkills());
-                    $jobOffer->setProjectDescription($jobOfferToModify->getProjectDescription());
-                    $jobOffer->setActive($jobOfferToModify->getActive());
-                }
-            }
-        
-            $this->saveData();
-        }
-
-        private function SaveData()
-        {
-            $arrayToEncode = array();
-
-            foreach($this->jobOfferList as $jobOffer)
+            try
             {
-                $valuesArray["jobOfferId"] = $jobOffer->getJobOfferId();
-                $valuesArray["jobPositionId"] = $jobOffer->getJobPositionId();
-                $valuesArray["cuitCompany"] = $jobOffer->getCuitCompany();
-                $valuesArray["datePublished"] = $jobOffer->getDatePublished();
-                $valuesArray["remote"] = $jobOffer->getRemote();
-                $valuesArray["salary"] = $jobOffer->getSalary();
-                $valuesArray["skills"] = $jobOffer->getSkills();
-                $valuesArray["projectDescription"] = $jobOffer->getProjectDescription();
-                $valuesArray["active"] = $jobOffer->getActive();
+                $jobOfferList = array();
 
-                array_push($arrayToEncode, $valuesArray);
-            }
+                $query = "SELECT jo.projectDescription, jo.salary, jo.remote, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId;";
 
-            $jsonContent = json_encode($arrayToEncode, JSON_PRETTY_PRINT);
-            
-            file_put_contents('Data/JobOffer.json', $jsonContent);
-        }
+                $this->connection = Connection::GetInstance();
 
-        private function RetrieveData()
-        {
-            $this->jobOfferList = array();
+                $resultSet = $this->connection->Execute($query);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $jobOff['projectDescription'] = $row["projectDescription"];
+                    $jobOff['salary'] = $row["salary"];
+                    $jobOff['remote'] = $row["remote"];
+                    $jobOff['description'] = $row["description"];
+                    $jobOff['name'] = $row["name"];
 
-            if(file_exists('Data/JobOffer.json'))
-            {
-                $jsonContent = file_get_contents('Data/JobOffer.json');
-
-                $arrayToDecode = ($jsonContent) ? json_decode($jsonContent, true) : array();
-
-                foreach($arrayToDecode as $valuesArray)
-                {
-                    $jobOffer = new JobOffer();
-                    $jobOffer->setJobOfferId($valuesArray["jobOfferId"]);
-                    $jobOffer->setJobPositionId($valuesArray["jobPositionId"]);
-                    $jobOffer->setCuitCompany($valuesArray["cuitCompany"]);
-                    $jobOffer->setDatePublished($valuesArray["datePublished"]);
-                    $jobOffer->setRemote($valuesArray["remote"]);
-                    $jobOffer->setSalary($valuesArray["salary"]);
-                    $jobOffer->setSkills($valuesArray["skills"]);
-                    $jobOffer->setProjectDescription($valuesArray["projectDescription"]);
-                    $jobOffer->setActive($valuesArray["active"]);
-
-                    array_push($this->jobOfferList, $jobOffer);
+                    array_push($jobOfferList, $jobOff);
                 }
+
+                return $jobOfferList;
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
             }
         }
+        
     }
 ?>
