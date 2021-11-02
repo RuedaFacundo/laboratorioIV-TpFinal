@@ -1,11 +1,20 @@
 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
+    <!-- <span class="nav-item">
+        <strong><a class="nav-link" data-bs-toggle="" href="" role="button" aria-expanded="false" style="color: rgba(255,255,255,.5);">Perfil</a></strong>
+    </span> -->
     <span class="nav-item">
-        <strong><a class="nav-link" data-bs-toggle="" href="<?php echo FRONT_ROOT ?>User/ShowProfileView" role="button" aria-expanded="false" style="color: rgba(255,255,255,.5);">Perfil</a></strong>
-    </span>
+        <strong class="nav-link" data-bs-toggle="" href="" role="button" aria-expanded="false" style="color: rgba(255,255,255,.5);">Perfil</strong>
+    </span> 
 
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="" role="button" aria-expanded="false">Empresa</a>
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="" role="button" aria-expanded="false">Ofertas Laborales</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListStudent">Listar</a></li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="" role="button" aria-expanded="false">Empresas</a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Company/ShowListViewStudent">Listar</a></li>
             </ul>

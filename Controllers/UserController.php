@@ -44,10 +44,6 @@
             require_once(VIEWS_PATH."registration.php");
         }
 
-
-
-        // QUE TOME EL CAMPO VALIDO PARA INICIAR SESION O REGISTRARSE
-
         public function AddAdmin ($email, $password)
         {
             $user = new User();
@@ -62,7 +58,7 @@
         public function AddStudent ($email, $password) // primero verifico que este en la API y luego lo registro en la base 
         {
             $arrayStudents = $this->userDAO->GetAllApi();
-            $student = null; // esto no lo tengo que instanciar como obejto? en el foreach no tengo q hacer sets?
+            $student = null; 
 
             foreach ($arrayStudents as $key => $value) {
                 if($email == $value->getEmail() && $value->getActive() == true){

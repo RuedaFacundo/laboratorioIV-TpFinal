@@ -67,6 +67,39 @@
                 throw $ex;
             }
         }
+
+        public function GetJobOfferStudent($careerId)
+        {
+            try
+            {
+                $jobOfferList = array();
+
+                $query = "SELECT jo.projectDescription, jo.salary, jo.remote, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId WHERE (jp.careerId = :careerId)";
+
+                $parameters['careerId'] = $careerId;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query, $parameters);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $jobOff['projectDescription'] = $row["projectDescription"];
+                    $jobOff['salary'] = $row["salary"];
+                    $jobOff['remote'] = $row["remote"];
+                    $jobOff['description'] = $row["description"];
+                    $jobOff['name'] = $row["name"];
+
+                    array_push($jobOfferList, $jobOff);
+                }
+
+                return $jobOfferList;
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
+            }
+        }
         
     }
 ?>

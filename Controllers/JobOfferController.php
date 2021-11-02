@@ -4,27 +4,26 @@
     use DAO\JobOfferDAO as JobOfferDAO;
     use DAO\JobPositionDAO as JobPositionDAO;
     use DAO\CompanyDAO as CompanyDAO;
-    use DAO\CareerDAO as CareerDAO;
+    use DAO\UserDAO as UserDAO;
     use Models\JobPosition as JobPosition;
     use Models\JobOffer as JobOffer;
     use Models\Company as Company;
-    use Models\Career as Career;
+    use Models\User as User;
 
     class JobOfferController
     {
         private $JobOfferDAO;
         private $JobPositionDAO;
         private $CompanyDAO;
-        private $CareerDAO;
-        private $careerList;
-        private $jobPositionList;
+        //private $jobPositionList;
+        private $UserDAO;
 
         public function __construct()
         {
             $this->jobOfferDAO = new JobOfferDAO();
             $this->JobPositionDAO = new JobPositionDAO();
             $this->CompanyDAO = new CompanyDAO();
-            $this->CareerDAO = new CareerDAO ();
+            $this->UserDAO = new UserDAO ();
         }
 
         public function ShowAddView()
@@ -42,6 +41,14 @@
             $jobOfferList = $this->jobOfferDAO->GetAll();
 
             require_once(VIEWS_PATH."jobOffer-list.php");
+        }
+
+        public function ShowListStudent()
+        {
+            $student = $this->UserDAO->GetApiByEmail($_SESSION['loggedUser']->getEmail());
+            $jobOfferList = $this->jobOfferDAO->GetJobOfferStudent($student->getCareerId());
+
+            require_once(VIEWS_PATH."jobOffer-listStudent.php");
         }
 
         public function Add($nameCompany, $jobPositionId, $datePublished, $remote, $salary, $skills, $projectDescription)
