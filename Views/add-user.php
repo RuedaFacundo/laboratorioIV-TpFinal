@@ -19,8 +19,10 @@
                                 <input type="password" name="password" value="" class="form-control" required>
                         </div>
                     </div>
+                    <div class="col-lg-4 divButtom">
+                            <button type="submit" name="button" class="btn btn-dark d-block">Agregar</button>
+                    </div>
                 </div>
-                <button type="submit" name="button" class="btn btn-dark ml-auto d-block">Agregar</button>
             </form>
         </div>
     </section>

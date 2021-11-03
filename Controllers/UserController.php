@@ -19,7 +19,6 @@
 
         public function ShowAddView()
         {
-            $careerList = $this->careerDAO->GetAllApi();
             require_once(VIEWS_PATH."add-user.php");
         }
 
@@ -91,10 +90,14 @@
                 $loggedUser = $this->Session($arrayAdmin, $email, $password);
             }
             
-            if($loggedUser != NULL && $studentApi->getActive() == true){ // con el estudiante traido por la api, verificar si esta activo
+            if($loggedUser != NULL){ // con el estudiante traido por la api, verificar si esta activo
                 if($loggedUser->getProfile() == 'Student') {
-                    $_SESSION['loggedUser'] = $loggedUser;
-                    $this->ShowProfileView($studentApi);
+                    if ($studentApi->getActive() == true){
+                        $_SESSION['loggedUser'] = $loggedUser;
+                        $this->ShowProfileView($studentApi);
+                    } else {
+                        require_once(VIEWS_PATH."home.php");
+                    }
                 } else {
                     $_SESSION['loggedUser'] = $loggedUser;
                     require_once(VIEWS_PATH."admin-profile.php");

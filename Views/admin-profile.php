@@ -4,41 +4,19 @@
 <main class="py-5">
     <section id="listado" class="mb-5">
         <div class="container">
-            <h2 class="mb-4">Bienvenido <?php echo $_SESSION['loggedUser']->getFirstName() ?> !! </h2>
-            <table class="table">
-                <thead>
-                    <tr class="table-primary">
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Apellido</th>
-                        <th scope="col">DNI</th>
-                        <th scope="col">Telefono</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="table-light">
-                        <th><?php echo $_SESSION['loggedUser']->getFirstName() ?></th>
-                        <td><?php echo $_SESSION['loggedUser']->getLastName() ?></td>
-                        <td><?php echo $_SESSION['loggedUser']->getDni() ?></td>
-                        <td><?php echo $_SESSION['loggedUser']->getFileNumber() ?></td>
-                    </tr>
-                </tbody>
-                <thead>
-                    <tr class="table-primary">                       
-                        <th scope="col">Genero</th>
-                        <th scope="col">Fecha de nacimiento</th>
-                        <th scope="col">Celular</th>
-                        <th scope="col">Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="table-light">
-                        <th><?php echo $_SESSION['loggedUser']->getGender() ?></th>
-                        <td><?php echo $_SESSION['loggedUser']->getBirthDate() ?></td>
-                        <td><?php echo $_SESSION['loggedUser']->getPhoneNumber() ?></td>
-                        <td><?php echo $_SESSION['loggedUser']->getEmail() ?></td>
-                    </tr>
-                </tbody>
-            </table>
+            <main class="d-flex align-items-center justify-content-center height-100">
+            <div class="content">
+                <header class="text-center">
+                    <h2>Bienvenido <?php echo $_SESSION['loggedUser']->getEmail() ?> !!</h2>
+                </header>
+                <div class="login-form bg-dark-alpha text-white" style="height: 200px; display: flex; align-items: center; justify-content: center;">
+                    <p style="padding: 10px;">
+                        Seleccione una de las opciones del menu desplegable para comenzar
+                    </p>
+                </div>
+            </div>
+        </div>
+    </main>
         </div>
     </section>
 </main>
