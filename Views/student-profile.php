@@ -7,7 +7,7 @@
             <h2 class="mb-4">Bienvenido <?php echo $_SESSION['loggedUser']->getFirstName() ?> !! </h2>
             <table class="table">
                 <thead>
-                    <tr class="table-primary">
+                    <tr class="table-secondary">
                         <th scope="col">Carrera</th>
                         <th scope="col">Nombre</th>
                         <th scope="col">Apellido</th>
@@ -23,7 +23,7 @@
                     </tr>
                 </tbody>
                 <thead>
-                    <tr class="table-primary">
+                    <tr class="table-secondary">
                         <th scope="col">Telefono</th>
                         <th scope="col">Genero</th>
                         <th scope="col">Fecha de nacimiento</th>
@@ -39,7 +39,7 @@
                     </tr>
                 </tbody>
                 <thead>
-                    <tr class="table-primary">
+                    <tr class="table-secondary">
                         <th colspan="4" style="text-align:center;">Email</th>
                     </tr>
                 </thead>
