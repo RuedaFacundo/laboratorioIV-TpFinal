@@ -33,10 +33,12 @@
             require_once(VIEWS_PATH."admin-profile.php");
         }
 
-
-        public function Logout () {
-			session_destroy();
-			require_once(VIEWS_PATH."home.php");
+        public function ShowListStudent()
+        {
+            $studentApi = new User();
+            $career = new Career();
+            $arrayStudents =  $this->userDAO->GetAllStudents();
+            require_once(VIEWS_PATH."student-list.php");
         }
 
         public function ShowRegisterView(){
@@ -117,6 +119,11 @@
                 }
             }
             return $student;
+        }
+
+        public function Logout () {
+			session_destroy();
+			require_once(VIEWS_PATH."home.php");
         }
         
     }

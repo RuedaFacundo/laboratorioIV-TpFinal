@@ -22,7 +22,7 @@
           <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="" role="button" aria-expanded="false">Estudiante</a>
                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="">Listar</a></li>
+                    <li><a class="dropdown-item" href="<?php echo FRONT_ROOT ?>User/ShowListStudent">Listar</a></li>
                </ul>
           </li>    
           <li class="nav-item dropdown">
