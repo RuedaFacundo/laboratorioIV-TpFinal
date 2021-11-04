@@ -17,6 +17,7 @@
                <ul class="dropdown-menu">
                     <li><a class="dropdown-item" href="<?php echo FRONT_ROOT ?>JobOffer/ShowAddView">Cargar</a></li>
                     <li><a class="dropdown-item" href="<?php echo FRONT_ROOT ?>JobOffer/ShowListView">Listar</a></li>
+                    <li><a class="dropdown-item" href="<?php echo FRONT_ROOT ?>JobOffer/ShowModifyView">Modificar</a></li>
                </ul>
           </li> 
           <li class="nav-item dropdown">

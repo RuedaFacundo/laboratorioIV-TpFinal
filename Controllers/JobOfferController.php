@@ -15,7 +15,6 @@
         private $JobOfferDAO;
         private $JobPositionDAO;
         private $CompanyDAO;
-        //private $jobPositionList;
         private $UserDAO;
 
         public function __construct()
@@ -34,6 +33,17 @@
             }
             $companyList = $this->CompanyDAO->GetAll();
             require_once(VIEWS_PATH."add-jobOffer.php");
+        }
+
+        public function ShowModifyView()
+        {
+            $jobOfferList = $this->jobOfferDAO->GetAll();
+            $jobPositionList = $this->JobPositionDAO->GetAll();
+            if($jobPositionList == null){
+                $jobPositionList = $this->JobPositionDAO->getAllApi();
+            }
+            $companyList = $this->CompanyDAO->GetAll();
+            require_once(VIEWS_PATH."modify-jobOffer.php");
         }
 
         public function ShowListView()
@@ -68,6 +78,35 @@
             $this->jobOfferDAO->Add($jobOffer);
 
             $this->ShowAddView();
+        }
+
+        public function Remove($id)
+        {
+            try {
+                $this->jobOfferDAO->remove($id);
+                $this->ShowListView();
+            } catch (\PDOException $ex) {
+                throw $ex;
+            }
+        }
+
+        public function Modify($id, $nameCompany, $jobPositionId, $datePublished, $remote, $salary, $skills, $projectDescription)
+        {
+            $jobOffer = new JobOffer();
+            $jobOffer->setJobOfferId($id);
+            $company = new Company();
+            $company = $this->CompanyDAO->GetByName($nameCompany);
+            $jobOffer->setCompanyId($company[0]->getCompanyId());
+            $jobOffer->setJobPositionId($jobPositionId);
+            $jobOffer->setDatePublished($datePublished);
+            $jobOffer->setRemote($remote);
+            $jobOffer->setSalary($salary);
+            $jobOffer->setSkills($skills);
+            $jobOffer->setProjectDescription($projectDescription);
+
+            $this->jobOfferDAO->modify($jobOffer);
+
+            $this->ShowListView();
         }
     }
 ?>

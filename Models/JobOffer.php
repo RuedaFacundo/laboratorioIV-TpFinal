@@ -3,6 +3,7 @@
 
     class JobOffer
     {
+        private $jobOfferId;
         private $jobPositionId;
         private $companyId;
         private $datePublished;
@@ -12,6 +13,8 @@
         private $projectDescription;
         private $active;
 
+        public function getJobOfferId() { return $this->jobOfferId; }
+        public function setJobOfferId($jobOfferId) { $this->jobOfferId = $jobOfferId; }
         public function getJobPositionId() { return $this->jobPositionId; }
         public function setJobPositionId($jobPositionId) { $this->jobPositionId = $jobPositionId; }
         public function getCompanyId() { return $this->companyId; }

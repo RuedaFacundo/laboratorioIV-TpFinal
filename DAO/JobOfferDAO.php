@@ -43,7 +43,7 @@
             {
                 $jobOfferList = array();
 
-                $query = "SELECT jo.projectDescription, jo.salary, jo.remote, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId;";
+                $query = "SELECT jo.jobOfferId, jo.projectDescription, jo.salary, jo.remote, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId;";
 
                 $this->connection = Connection::GetInstance();
 
@@ -51,6 +51,7 @@
                 
                 foreach ($resultSet as $row)
                 {                
+                    $jobOff['jobOfferId'] = $row["jobOfferId"];
                     $jobOff['projectDescription'] = $row["projectDescription"];
                     $jobOff['salary'] = $row["salary"];
                     $jobOff['remote'] = $row["remote"];
@@ -74,7 +75,7 @@
             {
                 $jobOfferList = array();
 
-                $query = "SELECT jo.projectDescription, jo.salary, jo.remote, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId WHERE (jp.careerId = :careerId)";
+                $query = "SELECT jo.jobOfferId, jo.projectDescription, jo.salary, jo.remote, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId WHERE (jp.careerId = :careerId)";
 
                 $parameters['careerId'] = $careerId;
 
@@ -83,7 +84,8 @@
                 $resultSet = $this->connection->Execute($query, $parameters);
                 
                 foreach ($resultSet as $row)
-                {                
+                {             
+                    $jobOff['jobOfferId'] = $row["jobOfferId"];
                     $jobOff['projectDescription'] = $row["projectDescription"];
                     $jobOff['salary'] = $row["salary"];
                     $jobOff['remote'] = $row["remote"];
@@ -94,6 +96,50 @@
                 }
 
                 return $jobOfferList;
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        
+        function remove($jobOfferId)
+        {
+            try
+            {
+                $query = "DELETE FROM ".$this->tableName." WHERE (jobOfferId = :jobOfferId)";
+    
+                $parameters["jobOfferId"] =  $jobOfferId;
+    
+                $this->connection = Connection::GetInstance();
+    
+                return $count=$this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        function modify(JobOffer $jobOffer)
+        {
+            try
+            {
+                $query= "UPDATE ".$this->tableName." SET copmanyId = :copmanyId, datePublished = :datePublished, remote = :remote, salary = :salary, skills = :skills, projectDescription = :projectDescription
+                WHERE (jobOfferId = :jobOfferId)";
+    
+                $parameters['jobOfferId']=$jobOffer->getJobOfferId();
+                $parameters['copmanyId']=$jobOffer->getCompanyId();
+                $parameters['datePublished']=$jobOffer->getDatePublished();
+                $parameters['remote']=$jobOffer->getRemote();
+                $parameters['salary']=$jobOffer->getSalary();
+                $parameters['skills']=$jobOffer->getSkills();
+                $parameters['projectDescription']=$jobOffer->getProjectDescription();
+    
+                $this->connection = Connection::GetInstance();
+    
+                return $count= $this->connection->ExecuteNonQuery($query, $parameters);
             }
             catch(\PDOException $ex)
             {
