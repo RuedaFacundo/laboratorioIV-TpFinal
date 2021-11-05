@@ -26,9 +26,9 @@
 
                 $this->connection->ExecuteNonQuery($query, $parameters);
             }
-            catch(\PDOException $ex)
+            catch(\Exception $ex)
             {
-                throw $ex;
+                echo "<script> if(alert('No se pudo agregar la empresa')); </script>";
             }
         }
 
@@ -57,9 +57,9 @@
 
                 return $companyList;
             }
-            catch(\PDOException $ex)
+            catch(\Exception $ex)
             {
-                throw $ex;
+                echo "<script> if(alert('No se pudo listar las empresas')); </script>";
             }
         }
 
@@ -91,9 +91,9 @@
 
                 return $companyList;
             }
-            catch(\PDOException $ex)
+            catch(\Exception $ex)
             {
-                throw $ex;
+                echo "<script> if(alert('No se encontro la empresa')); </script>";
             }
         }
 
@@ -109,9 +109,9 @@
     
                 return $count=$this->connection->ExecuteNonQuery($query, $parameters);
             }
-            catch(\PDOException $ex)
+            catch(\Exception $e)
             {
-                throw $ex;
+                echo "<script> if(alert('No se pudo eliminar la empresa')); </script>";
             }
         }
 
@@ -131,9 +131,9 @@
     
                 return $count= $this->connection->ExecuteNonQuery($query, $parameters);
             }
-            catch(\PDOException $ex)
+            catch(\Exception $ex)
             {
-                throw $ex;
+                echo "<script> if(alert('No se pudo modificar la empresa')); </script>";
             }
         }
     }

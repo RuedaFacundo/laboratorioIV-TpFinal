@@ -67,12 +67,11 @@
 
         public function Remove($cuit)
         {
-            try {
-                $this->companyDAO->remove($cuit);
-                $this->ShowListView();
-            } catch (\PDOException $ex) {
-                throw $ex;
+            $companyRemove = $this->companyDAO->remove($cuit);
+            if($companyRemove == null ){
+                echo "<script> if(alert('No se pudo eliminar la empresa')); </script>";
             }
+            $this->ShowListView();
         }
 
         public function Modify($name, $cuit, $adress, $founded)
@@ -83,7 +82,11 @@
             $companyModify->setAdress($adress);
             $companyModify->setFounded($founded);
 
-            $this->companyDAO->modify($companyModify);
+            $companyModified = $this->companyDAO->modify($companyModify);
+
+            if($companyModified == null ){
+                echo "<script> if(alert('No se pudo modificar la empresa')); </script>";
+            }
 
             $this->ShowListView();
         }
