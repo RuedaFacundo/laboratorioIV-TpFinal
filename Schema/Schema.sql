@@ -52,3 +52,14 @@ CREATE TABLE jobOffers
 
 alter table careers 
 add active boolean;
+
+CREATE TABLE appointments
+(
+	appointmentId int auto_increment not null primary key,
+    jobOfferId int,
+    studentId int,
+    message NVARCHAR(100) NOT NULL,
+    cv NVARCHAR(50) NOT NULL,
+	constraint fk_jobOfferId foreign key (jobOfferId) references jobOffers (jobOfferId),
+    constraint fk_studentId foreign key (studentId) references users (userId)
+)Engine=InnoDB;

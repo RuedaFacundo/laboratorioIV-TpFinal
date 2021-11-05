@@ -5,6 +5,7 @@ define("ROOT", dirname(__DIR__) . "/");
 define("FRONT_ROOT", "/Proyects/TP/laboratorioIV-TpFinal/");
 define("VIEWS_PATH", "Views/");
 define("CSS_PATH", FRONT_ROOT.VIEWS_PATH . "css/");
+define("UPLOADS_PATH", "uploads/");
 define("JS_PATH", FRONT_ROOT.VIEWS_PATH . "js/");
 define("IMG_PATH", VIEWS_PATH . "img/");
 
@@ -13,7 +14,3 @@ define("DB_NAME", "UTN");
 define("DB_USER", "root");
 define("DB_PASS", "");
 ?>
-
-
-
-

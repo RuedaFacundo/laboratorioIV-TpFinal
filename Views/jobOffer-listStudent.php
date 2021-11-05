@@ -19,10 +19,11 @@
                     </thead>
                     <tbody>
                     <?php 
-                        foreach($jobOfferList as $value){                                
+                        foreach($jobOfferList as $value){
                     ?>
                     <form action="<?php echo FRONT_ROOT ?>Appointment/ShowAddView" method="post">
                     <tr>
+                        <input type="hidden" name="jobOfferId" value="<?php echo $value['jobOfferId'] ?>">
                         <td><?php echo $value['name'] ?></td>
                         <input type="hidden" name="company" value="<?php echo $value['name'] ?>">
                         <td><?php echo $value['description'] ?></td>
