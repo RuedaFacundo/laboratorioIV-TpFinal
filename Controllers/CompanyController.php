@@ -53,13 +53,12 @@
 
         public function Add($name, $cuit, $adress, $founded)
         {
-
             $company = new Company();
             $company->setName($name);
             $company->setCuit($cuit);
             $company->setAdress($adress);
             $company->setFounded($founded);
-    
+
             $this->companyDAO->Add($company);
 
             $this->ShowAddView();
