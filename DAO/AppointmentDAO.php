@@ -5,7 +5,7 @@
     use DAO\Connection as Connection;
     use Models\Appointment as Appointment;
 
-    class AppointmentDAO
+    class AppointmentDAO implements IAppointmentDAO
     {
         private $connection;
         private $tableName = "appointments";

@@ -5,5 +5,6 @@
     {
         function GetAllApi ();
         function getById ($careerId);
+        function GetAll ();
     }
 ?>

@@ -10,5 +10,6 @@
         function GetAll();
         function remove($cuit);
         function modify(Company $company);
+        function GetByName($name);
     }
 ?>

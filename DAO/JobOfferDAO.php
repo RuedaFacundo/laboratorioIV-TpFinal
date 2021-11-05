@@ -5,7 +5,7 @@
     use \Exception as Exception;
     use DAO\Connection as Connection;
 
-    class JobOfferDAO 
+    class JobOfferDAO implements IJobOfferDAO
     {
         private $connection;
         private $tableName = "jobOffers";

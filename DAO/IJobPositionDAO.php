@@ -5,5 +5,6 @@
     {
         function GetAllApi ();
         function getById ($id);
+        function GetAll();
     }
 ?>
