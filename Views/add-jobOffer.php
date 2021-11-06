@@ -1,4 +1,6 @@
 <?php
+    if(isset($_SESSION['loggedUser'])) {
+        $loggedUser = $_SESSION['loggedUser'];
     require_once('nav.php');
 ?>
 <main class="py-5">
@@ -74,3 +76,8 @@
         </div>
     </section>
 </main>  
+<?php
+    } else {
+        require_once(VIEWS_PATH."home.php");
+    }
+?>

@@ -1,4 +1,6 @@
 <?php
+    if(isset($_SESSION['loggedUser'])) {
+        $loggedUser = $_SESSION['loggedUser'];
     require_once('nav.php');
 ?>
 <main class="py-5">
@@ -81,3 +83,8 @@
         document.getElementById("datefield").setAttribute("max", today);
     </script>
 </main>
+<?php
+    } else {
+        require_once(VIEWS_PATH."home.php");
+    }
+?>
