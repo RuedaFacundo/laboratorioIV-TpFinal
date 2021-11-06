@@ -1,12 +1,11 @@
 <?php
     if(isset($_SESSION['loggedUser'])) {
-        $loggedUser = $_SESSION['loggedUser'];
     require_once('nav-student.php');
 ?>
 <main class="py-5">
     <section id="listado" class="mb-5">
         <div class="container">
-            <h2 class="mb-4">Bienvenido <?php echo $_SESSION['loggedUser']->getFirstName() ?> !! </h2>
+            <h2 class="mb-4">Bienvenido !! </h2>
             <table class="table">
                 <thead>
                     <tr class="table-secondary">
