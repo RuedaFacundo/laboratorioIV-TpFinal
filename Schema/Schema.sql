@@ -63,3 +63,16 @@ CREATE TABLE appointments
 	constraint fk_jobOfferId foreign key (jobOfferId) references jobOffers (jobOfferId),
     constraint fk_studentId foreign key (studentId) references users (userId)
 )Engine=InnoDB;
+
+-- PARA FILTRO DE JOB POSITION --
+SELECT jo.jobOfferId, c.name, jp.description, jo.salary, jo.remote, jo.projectDescription
+FROM jobOffers jo 
+INNER JOIN jobPositions jp on jp.jobPositionId = jo.jobPositionId
+INNER JOIN companies c on c.copmanyId = jo.copmanyId
+WHERE (jp.description = 'Textile design assistant')
+
+-- CONSULTO TODAS LAS OFERTAS LABORALES --
+select jo.projectDescription, jo.salary, jo.remote, jp.description, c.name
+from jobOffers jo
+inner join jobPositions jp on jp.jobPositionId = jo.jobPositionId
+inner join companies c on c.copmanyId = jo.copmanyId;

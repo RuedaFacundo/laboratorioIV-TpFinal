@@ -41,26 +41,47 @@
             </tbody>
             </table>
             <form action="<?php echo FRONT_ROOT ?>JobOffer/Remove" method="post">
-            <table style="max-width: 35%;" >
-                <thead>
-                <tr>
-                    <th style="width: 100px;">Numero</th>
-                    <th style="width: 170px; text-align: center">Accion</th>
-                </tr>
-                </thead>
-                <tbody align=center>
-                <tr>
-                    <td>
-                    <input type="number" name="id" style="height: 40px;" min="0" placeholder="Ingrese el numero">  
-                    </td>
-                    <td>
-                    <input type="submit" class="btn" value="Remover" style="background-color:#DC8E47;color:white;"/>
-                    </td>
-                </tr>
-                </tbody>
-                </tr>
-            </table>
-        <form>
+                <table style="max-width: 35%;" >
+                    <thead>
+                    <tr>
+                        <th style="width: 100px;">Numero</th>
+                        <th style="width: 170px; text-align: center">Accion</th>
+                    </tr>
+                    </thead>
+                    <tbody align=center>
+                    <tr>
+                        <td>
+                        <input type="number" name="id" style="height: 40px;" min="0" placeholder="Ingrese el numero">  
+                        </td>
+                        <td>
+                        <input type="submit" class="btn" value="Remover" style="background-color:#DC8E47;color:white;"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </tr>
+                </table>
+            </form>
+            <form action="<?php echo FRONT_ROOT ?>JobOffer/ShowListOffersByJobPosition" method="post">
+                <table style="max-width: 35%;" >
+                    <thead>
+                    <tr>
+                        <th style="width: 100px;">Job Position</th>
+                        <th style="width: 170px; text-align: center"></th>
+                    </tr>
+                    </thead>
+                    <tbody align=center>
+                    <tr>
+                        <td>
+                        <input type="text" name="jobPosition" style="height: 40px;" min="0" placeholder="Ingrese el puesto">  
+                        </td>
+                        <td>
+                        <input type="submit" class="btn" value="Buscar" style="background-color:#DC8E47;color:white;"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </tr>
+                </table>
+            </form>
         </div>
     </section>
 </main>

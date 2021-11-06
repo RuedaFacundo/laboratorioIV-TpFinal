@@ -61,6 +61,13 @@
             require_once(VIEWS_PATH."jobOffer-listStudent.php");
         }
 
+        public function ShowListOffersByJobPosition($jobPosition)
+        {
+            $jobOfferList = $this->jobOfferDAO->GetOffersByJobPosition($jobPosition);
+
+            require_once(VIEWS_PATH."jobOffer-byJobPosition.php");
+        }
+
         public function Add($nameCompany, $jobPositionId, $datePublished, $remote, $salary, $skills, $projectDescription)
         {
             $jobOffer = new JobOffer();
