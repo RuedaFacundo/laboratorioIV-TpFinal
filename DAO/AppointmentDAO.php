@@ -3,12 +3,17 @@
 
     use \Exception as Exception;
     use DAO\Connection as Connection;
+    use DAO\IAppointmentDAO as IAppointmentDAO;
     use Models\Appointment as Appointment;
 
     class AppointmentDAO implements IAppointmentDAO
     {
         private $connection;
         private $tableName = "appointments";
+        private $tableUsers = "users";
+        private $tableJobOffer = "jobOffers";
+        private $tableCompany = "companies";
+        private $tablePosition = "jobPositions";
 
         public function Add(Appointment $appointment)
         {
@@ -37,7 +42,7 @@
             {
                 $appointmentList = array();
 
-                $query = "SELECT * FROM ".$this->tableName;
+                $query = "SELECT ap.message, ap.cv, u.email, jp.description, c.name FROM ".$this->tableName. " ap INNER JOIN ". $this->tableUsers. " u on u.userId = ap.studentId INNER JOIN ". $this->tableJobOffer. " jo on jo.jobOfferId = ap.jobOfferId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId INNER JOIN ". $this->tablePosition. " jp on jp.jobPositionId = jo.jobPositionId";
 
                 $this->connection = Connection::GetInstance();
 
@@ -45,11 +50,11 @@
                 
                 foreach ($resultSet as $row)
                 {                
-                    $appointment = new Appointment();
-                    $appointment->setJobOfferId($row["jobOfferId"]);
-                    $appointment->setStudentId($row["studentId"]);
-                    $appointment->setMessage($row["message"]);
-                    $appointment->setCv($row["cv"]);
+                    $appointment['name'] = $row["name"];
+                    $appointment['description'] = $row["description"];
+                    $appointment['email'] = $row["email"];
+                    $appointment['message'] = $row["message"];
+                    $appointment['cv'] = $row["cv"];
 
                     array_push($appointmentList, $appointment);
                 }

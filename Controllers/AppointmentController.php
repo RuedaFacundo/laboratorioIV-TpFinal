@@ -21,7 +21,18 @@
             require_once(VIEWS_PATH."add-appointment.php");
         }
 
-        public function Add( $id, $message, $cv)
+        public function showListView()
+        {
+            $appointmentList = $this->appointmentDAO->GetAll();
+            require_once(VIEWS_PATH."appointment-list.php");
+        }
+
+        public function ShowFile($name)
+        {
+            require_once(VIEWS_PATH."file-show.php");
+        }
+
+        public function Add($id, $message, $cv)
         {
             $file = $this->Upload($cv);
             
@@ -65,10 +76,8 @@
             }
             catch(Exception $ex)
             {
-                $message = $ex->getMessage();
+                echo "<script> if(alert('Ocurrió un error al intentar subir el archivo')); </script>";
             }
-
-            //$this->ShowListView($message);
         }    
     }
 ?>

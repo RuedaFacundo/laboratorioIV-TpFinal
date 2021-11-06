@@ -3,6 +3,7 @@
 
     use Models\JobOffer as JobOffer;
     use \Exception as Exception;
+    use DAO\IJobOfferDAO as IJobOfferDAO;
     use DAO\Connection as Connection;
 
     class JobOfferDAO implements IJobOfferDAO
@@ -104,7 +105,7 @@
         }
 
         
-        function remove($jobOfferId)
+        public function remove($jobOfferId)
         {
             try
             {
@@ -122,7 +123,7 @@
             }
         }
 
-        function modify(JobOffer $jobOffer)
+        public function modify(JobOffer $jobOffer)
         {
             try
             {

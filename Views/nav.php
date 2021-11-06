@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg  navbar-dark bg-dark">
      <span class="nav-item">
-          <strong><a class="nav-link" data-bs-toggle="" href="<?php echo FRONT_ROOT ?>User/ShowAdminProfileView" role="button" aria-expanded="false" style="color: rgba(255,255,255,.5);">Perfil</a></strong>
+          <strong><a class="nav-link" data-bs-toggle="" href="<?php echo FRONT_ROOT ?>User/ShowAdminProfileView" role="button" aria-expanded="false" style="color: rgba(255,255,255,.5);">Inicio</a></strong>
      </span>
      
      <ul class="navbar-nav ml-auto">
@@ -23,7 +23,8 @@
           <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="" role="button" aria-expanded="false">Estudiante</a>
                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="<?php echo FRONT_ROOT ?>User/ShowListStudent">Listar</a></li>
+                    <li><a class="dropdown-item" href="<?php echo FRONT_ROOT ?>User/ShowListStudent">Registrados</a></li>
+                    <li><a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Appointment/ShowListView">Postulados</a></li>
                </ul>
           </li>    
           <li class="nav-item dropdown">
