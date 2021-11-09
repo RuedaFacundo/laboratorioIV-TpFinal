@@ -65,7 +65,7 @@
                 <table style="max-width: 35%;" >
                     <thead>
                     <tr>
-                        <th style="width: 100px;">Job Position</th>
+                        <th style="width: 100px;">Puesto laboral</th>
                         <th style="width: 170px; text-align: center"></th>
                     </tr>
                     </thead>
@@ -73,6 +73,27 @@
                     <tr>
                         <td>
                         <input type="text" name="jobPosition" style="height: 40px;" min="0" placeholder="Ingrese el puesto">  
+                        </td>
+                        <td>
+                        <input type="submit" class="btn" value="Buscar" style="background-color:#DC8E47;color:white;"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                    </tr>
+                </table>
+            </form>
+            <form action="<?php echo FRONT_ROOT ?>JobOffer/ShowListOffersByCareer" method="post">
+                <table style="max-width: 35%;" >
+                    <thead>
+                    <tr>
+                        <th style="width: 100px;">Carrera</th>
+                        <th style="width: 170px; text-align: center"></th>
+                    </tr>
+                    </thead>
+                    <tbody align=center>
+                    <tr>
+                        <td>
+                        <input type="text" name="career" style="height: 40px;" min="0" placeholder="Ingrese la carrera">  
                         </td>
                         <td>
                         <input type="submit" class="btn" value="Buscar" style="background-color:#DC8E47;color:white;"/>

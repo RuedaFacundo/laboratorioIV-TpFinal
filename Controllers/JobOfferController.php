@@ -65,7 +65,14 @@
         {
             $jobOfferList = $this->jobOfferDAO->GetOffersByJobPosition($jobPosition);
 
-            require_once(VIEWS_PATH."jobOffer-byJobPosition.php");
+            require_once(VIEWS_PATH."jobOffer-listFilter.php");
+        }
+
+        public function ShowListOffersByCareer($career)
+        {
+            $jobOfferList = $this->jobOfferDAO->GetOffersByCareer($career);
+
+            require_once(VIEWS_PATH."jobOffer-listFilter.php");
         }
 
         public function Add($nameCompany, $jobPositionId, $datePublished, $remote, $salary, $skills, $projectDescription)

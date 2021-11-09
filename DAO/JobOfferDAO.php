@@ -12,6 +12,7 @@
         private $tableName = "jobOffers";
         private $tableJobPosition = "jobPositions";
         private $tableCompany = "companies";
+        private $tableCareer = "careers";
 
         public function Add(JobOffer $jobOffer)
         {
@@ -112,7 +113,7 @@
                 $query = "DELETE FROM ".$this->tableName." WHERE (jobOfferId = :jobOfferId)";
     
                 $parameters["jobOfferId"] =  $jobOfferId;
-    
+
                 $this->connection = Connection::GetInstance();
     
                 return $count=$this->connection->ExecuteNonQuery($query, $parameters);
@@ -158,6 +159,41 @@
                 WHERE (jp.description = :jobPosition)";
 
                 $parameters['jobPosition']=$jobPosition;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query, $parameters);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $jobOff['jobOfferId'] = $row["jobOfferId"];
+                    $jobOff['projectDescription'] = $row["projectDescription"];
+                    $jobOff['salary'] = $row["salary"];
+                    $jobOff['remote'] = $row["remote"];
+                    $jobOff['description'] = $row["description"];
+                    $jobOff['name'] = $row["name"];
+
+                    array_push($jobOfferList, $jobOff);
+                }
+
+                return $jobOfferList;
+            }
+            catch(\PDOException $ex)
+            {
+                throw $ex;
+            }
+        }
+
+        public function GetOffersByCareer($career)
+        {
+            try
+            {
+                $jobOfferList = array();
+
+                $query = "SELECT jo.jobOfferId, jo.projectDescription, jo.salary, jo.remote, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId INNER JOIN ". $this->tableCareer. " car on car.careerId = jp.careerId
+                WHERE (car.description = :career)";
+
+                $parameters['career']=$career;
 
                 $this->connection = Connection::GetInstance();
 
