@@ -58,14 +58,7 @@
 
         public function AddStudent ($email, $password) // primero verifico que este en la API y luego lo registro en la base 
         {
-            $arrayStudents = $this->userDAO->GetAllApi();
-            $student = null; 
-
-            foreach ($arrayStudents as $key => $value) {
-                if($email == $value->getEmail() && $value->getActive() == true){
-                    $student = $value;
-                }
-            }
+            $student = $this->userDAO->GetApiByEmail($email);
 
             if($student){
                 $user = new User();
@@ -82,18 +75,11 @@
 
         public function Login($email, $password)
         {
-            $arrayStudents =  $this->userDAO->GetAllStudents();
-            $arrayAdmin =  $this->userDAO->GetAllAdmin();
+            $loggedUser = $this->userDAO->GetUserByEmail($email);
             $studentApi = $this->userDAO->GetApiByEmail($email);
-            $loggedUser = NULL;
 
-            $loggedUser = $this->Session($arrayStudents, $email, $password);
-            if ($loggedUser == NULL){
-                $loggedUser = $this->Session($arrayAdmin, $email, $password);
-            }
-            
-            if($loggedUser != NULL){ // con el estudiante traido por la api, verificar si esta activo
-                if($loggedUser->getProfile() == 'Student') {
+            if($loggedUser != NULL){
+                if($loggedUser[0]->getProfile() == 'Student') {
                     if ($studentApi->getActive() == true){
                         $_SESSION['loggedUser'] = $loggedUser;
                         $this->ShowProfileView($studentApi);
@@ -107,18 +93,6 @@
             } else {
                 require_once(VIEWS_PATH."home.php");
             }
-        }
-
-        private function Session ($array, $email, $password)
-        {
-            $student = NULL;
-
-            foreach ($array as $key => $value) {
-                if($email == $value->getEmail() && $password == $value->getPassword()){
-                    $student = $value;
-                }
-            }
-            return $student;
         }
 
         public function Logout () {

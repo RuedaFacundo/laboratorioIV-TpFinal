@@ -55,7 +55,7 @@
 
         public function ShowListStudent()
         {
-            $student = $this->UserDAO->GetApiByEmail($_SESSION['loggedUser']->getEmail());
+            $student = $this->UserDAO->GetApiByEmail($_SESSION['loggedUser'][0]->getEmail());
             $jobOfferList = $this->jobOfferDAO->GetJobOfferStudent($student->getCareerId());
 
             require_once(VIEWS_PATH."jobOffer-listStudent.php");
@@ -64,15 +64,23 @@
         public function ShowListOffersByJobPosition($jobPosition)
         {
             $jobOfferList = $this->jobOfferDAO->GetOffersByJobPosition($jobPosition);
-
-            require_once(VIEWS_PATH."jobOffer-listFilter.php");
+            if($jobOfferList){
+                require_once(VIEWS_PATH."jobOffer-listFilter.php");
+            } else {
+                echo "<script> if(alert('No se encontraron ofertas laborales del puesto ingresado')); </script>";
+                $this->ShowListView();
+            }
         }
 
         public function ShowListOffersByCareer($career)
         {
             $jobOfferList = $this->jobOfferDAO->GetOffersByCareer($career);
-
-            require_once(VIEWS_PATH."jobOffer-listFilter.php");
+            if($jobOfferList){
+                require_once(VIEWS_PATH."jobOffer-listFilter.php");
+            } else {
+                echo "<script> if(alert('No se encontraron ofertas laborales de la carrera ingresada')); </script>";
+                $this->ShowListView();
+            }
         }
 
         public function Add($nameCompany, $jobPositionId, $datePublished, $remote, $salary, $skills, $projectDescription)
@@ -96,12 +104,11 @@
 
         public function Remove($id)
         {
-            try {
-                $this->jobOfferDAO->remove($id);
-                $this->ShowListView();
-            } catch (\PDOException $ex) {
-                throw $ex;
+            $JobOfferRemove = $this->jobOfferDAO->remove($id);
+            if($JobOfferRemove == null ){
+                echo "<script> if(alert('No se pudo eliminar la oferta laboral')); </script>";
             }
+            $this->ShowListView();
         }
 
         public function Modify($id, $nameCompany, $jobPositionId, $datePublished, $remote, $salary, $skills, $projectDescription)

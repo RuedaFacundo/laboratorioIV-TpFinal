@@ -10,6 +10,5 @@
         function GetAllApi ();
         function GetStudentsByEmail($email);
         function GetApiByEmail ($email);
-        function GetAllAdmin();
     }
 ?>

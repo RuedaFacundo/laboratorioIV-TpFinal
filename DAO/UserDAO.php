@@ -84,7 +84,7 @@
             }
             catch(\PDOException $ex)
             {
-                throw $ex;
+                echo "<script> if(alert('No se pudo agregar el usuario')); </script>";
             }
         }
         
@@ -114,21 +114,23 @@
             }
             catch(\PDOException $ex)
             {
-                throw $ex;
+                echo "<script> if(alert('No se pudo listar los estudiantes registrados')); </script>";
             }
         }
 
-        public function GetAllAdmin() 
+        public function GetUserByEmail($email) 
         {
             try
             {
                 $userList = array();
 
-                $query = "SELECT * FROM ".$this->tableName." WHERE (profile = 'Admin')";
+                $query = "SELECT * FROM ".$this->tableName." WHERE (email = :email)";
+
+                $parameters['email'] = $email;
 
                 $this->connection = Connection::GetInstance();
 
-                $resultSet = $this->connection->Execute($query);
+                $resultSet = $this->connection->Execute($query, $parameters);
                 
                 foreach ($resultSet as $row)
                 {                
@@ -144,7 +146,7 @@
             }
             catch(\PDOException $ex)
             {
-                throw $ex;
+                echo "<script> if(alert('No se encontro el usuario registrado')); </script>";
             }
         }
 
@@ -153,11 +155,44 @@
             $student = null;
 
             foreach($studentList as $value){
-                if ($value->getEmail() == $email){
+                if ($value->getEmail() == $email && $value->getActive() == true){
                     $student = $value;
                 }
             }
             return $student;
+        }
+
+        public function GetStudentsByEmail($email) 
+        {
+            try
+            {
+                $userList = array();
+
+                $query = "SELECT * FROM ".$this->tableName." WHERE (profile = 'Student' and email = :email)";
+
+                $parameters['email'] = $email;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query, $parameters);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $user = new User();
+                    $user->setStudentId($row["userId"]);
+                    $user->setEmail($row["email"]);
+                    $user->setPassword($row["password"]);
+                    $user->setProfile($row["profile"]);
+
+                    array_push($userList, $user);
+                }
+
+                return $userList;
+            }
+            catch(\PDOException $ex)
+            {
+                echo "<script> if(alert('No se encontro el estudiante por email')); </script>";
+            }
         }
     }
 ?>
