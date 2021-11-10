@@ -32,7 +32,7 @@
             }
             catch(Exception $ex)
             {
-                throw $ex;
+                echo "<script> if(alert('No se pudo realizar la postulacion')); </script>";
             }
         }
 
@@ -63,7 +63,41 @@
             }
             catch(\PDOException $ex)
             {
-                throw $ex;
+                echo "<script> if(alert('No se pudo consultar las postulaciones')); </script>";
+            }
+        }
+
+        public function GetByIdStudent($idStudent)
+        {
+            try
+            {
+                $appointmentList = array();
+
+                $query = "SELECT ap.message, ap.cv, u.email, jp.description, c.name FROM ".$this->tableName. " ap INNER JOIN ". $this->tableUsers. " u on u.userId = ap.studentId INNER JOIN ". $this->tableJobOffer. " jo on jo.jobOfferId = ap.jobOfferId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId INNER JOIN ". $this->tablePosition. " jp on jp.jobPositionId = jo.jobPositionId
+                WHERE (u.userId = :idStudent)";
+
+                $parameters["idStudent"] =  $idStudent;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query, $parameters);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $appointment['name'] = $row["name"];
+                    $appointment['description'] = $row["description"];
+                    $appointment['email'] = $row["email"];
+                    $appointment['message'] = $row["message"];
+                    $appointment['cv'] = $row["cv"];
+
+                    array_push($appointmentList, $appointment);
+                }
+
+                return $appointmentList;
+            }
+            catch(\PDOException $ex)
+            {
+                echo "<script> if(alert('No tiene postulaciones realizadas')); </script>";
             }
         }
     }

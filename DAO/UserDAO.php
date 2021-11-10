@@ -135,6 +135,7 @@
                 foreach ($resultSet as $row)
                 {                
                     $user = new User();
+                    $user->setStudentId($row["userId"]);
                     $user->setEmail($row["email"]);
                     $user->setPassword($row["password"]);
                     $user->setProfile($row["profile"]);

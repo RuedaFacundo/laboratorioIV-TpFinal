@@ -14,6 +14,12 @@
             </ul>
         </li>
         <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="" role="button" aria-expanded="false">Postulaciones</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Appointment/ShowAppointment">Listar</a></li>
+            </ul>
+        </li>
+        <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="" role="button" aria-expanded="false">Empresas</a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="<?php echo FRONT_ROOT ?>Company/ShowListViewStudent">Listar</a></li>

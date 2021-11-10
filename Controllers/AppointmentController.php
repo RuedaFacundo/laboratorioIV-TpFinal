@@ -4,6 +4,7 @@
     use DAO\AppointmentDAO as AppointmentDAO;
     use Models\Appointment as Appointment;
     use DAO\UserDAO as UserDAO;
+    use Models\User as User;
 
     class AppointmentController
     {
@@ -18,7 +19,13 @@
 
         public function showAddView($jobOfferId, $company, $jobPosition )
         {
-            require_once(VIEWS_PATH."add-appointment.php");
+            $appointmentList = $this->appointmentDAO->GetByIdStudent($_SESSION['loggedUser'][0]->getStudentId());
+            if($appointmentList){
+                echo "<script> if(alert('Se encuentra postulado en una oferta activa')); </script>";
+                require_once(VIEWS_PATH."appointment.php");
+            } else {
+                require_once(VIEWS_PATH."add-appointment.php");
+            }
         }
 
         public function showListView()
@@ -32,11 +39,21 @@
             require_once(VIEWS_PATH."file-show.php");
         }
 
+        public function ShowAppointment()
+        {
+            $appointmentList = $this->appointmentDAO->GetByIdStudent($_SESSION['loggedUser'][0]->getStudentId());
+            if ($appointmentList){
+                require_once(VIEWS_PATH."appointment.php");
+            } else {
+                require_once(VIEWS_PATH."student-profile.php");
+            }
+        }
+
         public function Add($id, $message, $cv)
         {
             $file = $this->Upload($cv);
             
-            $student = $this->userDAO->GetStudentsByEmail($_SESSION['loggedUser']->getEmail());
+            $student = $this->userDAO->GetStudentsByEmail($_SESSION['loggedUser'][0]->getEmail());
 
             $appointment = new Appointment();
             $appointment->setJobOfferId($id);
@@ -45,6 +62,8 @@
             $appointment->setCv($file);
     
             $this->appointmentDAO->Add($appointment);
+
+            $this->ShowAppointment();
         }
 
         private function Upload($file)
