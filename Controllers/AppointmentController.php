@@ -39,6 +39,11 @@
             require_once(VIEWS_PATH."file-show.php");
         }
 
+        public function ShowDownload($name)
+        {
+            require_once(VIEWS_PATH."file-download.php");
+        }
+
         public function ShowAppointment()
         {
             $appointmentList = $this->appointmentDAO->GetByIdStudent($_SESSION['loggedUser'][0]->getStudentId());

@@ -13,7 +13,7 @@
                     <th>Puesto</th>
                     <th>Email</th>
                     <th>Mensaje</th>
-                    <th>CV</th>
+                    <th colspan="2" style="text-align:center;">CV</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -26,6 +26,7 @@
                     <td><?php echo $value['email'] ?></td> 
                     <td><?php echo $value['message'] ?></td> 
                     <td> <a href=" <?php echo FRONT_ROOT ?>Appointment/ShowFile?name=<?php echo $value['cv']?>">Ver</a></td>
+                    <td> <a href=" <?php echo FRONT_ROOT ?>Appointment/ShowDownload?name=<?php echo $value['cv']?>">Descargar</a></td>
                 </tr>
                 <?php                              
                     }
