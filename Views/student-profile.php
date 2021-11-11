@@ -17,7 +17,7 @@
                 </thead>
                 <tbody>
                     <tr class="table-light">
-                        <th><?php echo $career[0]['description'] ?></th>
+                        <th><?php echo $career->getDescription() ?></th>
                         <td><?php echo $studentApi->getFirstName() ?></td>
                         <td><?php echo $studentApi->getLastName() ?></td>
                         <td><?php echo $studentApi->getDni() ?></td>

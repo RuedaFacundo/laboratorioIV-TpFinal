@@ -23,12 +23,13 @@
         {
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (jobOfferId, studentId, message, cv) VALUES (:jobOfferId, :studentId, :message, :cv);";
+                $query = "INSERT INTO ".$this->tableName." (jobOfferId, studentId, message, cv, active) VALUES (:jobOfferId, :studentId, :message, :cv, :active);";
                 
                 $parameters['jobOfferId'] = $appointment->getJobOffer()->getJobOfferId();
                 $parameters['studentId'] = $appointment->getStudent()->getStudentId();
                 $parameters['message'] = $appointment->getMessage();
                 $parameters['cv'] = $appointment->getCv();
+                $parameters['active'] = $appointment->getActive();
 
                 $this->connection = Connection::GetInstance();
 
@@ -46,7 +47,7 @@
             {
                 $appointmentList = array();
 
-                $query = "SELECT ap.message, ap.cv, u.email, jp.description, c.name FROM ".$this->tableName. " ap INNER JOIN ". $this->tableUsers. " u on u.userId = ap.studentId INNER JOIN ". $this->tableJobOffer. " jo on jo.jobOfferId = ap.jobOfferId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId INNER JOIN ". $this->tablePosition. " jp on jp.jobPositionId = jo.jobPositionId";
+                $query = "SELECT ap.message, ap.cv, ap.active, u.email, jp.description, c.name FROM ".$this->tableName. " ap INNER JOIN ". $this->tableUsers. " u on u.userId = ap.studentId INNER JOIN ". $this->tableJobOffer. " jo on jo.jobOfferId = ap.jobOfferId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId INNER JOIN ". $this->tablePosition. " jp on jp.jobPositionId = jo.jobPositionId";
 
                 $this->connection = Connection::GetInstance();
 
@@ -57,6 +58,7 @@
                     $appointment = new Appointment(); 
                     $appointment->setMessage($row["message"]);
                     $appointment->setCv($row["cv"]);
+                    $appointment->setActive($row["active"]);
 
                     $user = new User();
                     $user->setEmail($row["email"]);
@@ -91,7 +93,7 @@
             {
                 $appointmentList = array();
 
-                $query = "SELECT ap.message, ap.cv, u.email, jp.description, c.name FROM ".$this->tableName. " ap INNER JOIN ". $this->tableUsers. " u on u.userId = ap.studentId INNER JOIN ". $this->tableJobOffer. " jo on jo.jobOfferId = ap.jobOfferId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId INNER JOIN ". $this->tablePosition. " jp on jp.jobPositionId = jo.jobPositionId
+                $query = "SELECT ap.message, ap.cv, ap.active, u.email, jp.description, c.name FROM ".$this->tableName. " ap INNER JOIN ". $this->tableUsers. " u on u.userId = ap.studentId INNER JOIN ". $this->tableJobOffer. " jo on jo.jobOfferId = ap.jobOfferId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId INNER JOIN ". $this->tablePosition. " jp on jp.jobPositionId = jo.jobPositionId
                 WHERE (u.userId = :idStudent)";
 
                 $parameters["idStudent"] =  $idStudent;
@@ -105,6 +107,7 @@
                     $appointment = new Appointment(); 
                     $appointment->setMessage($row["message"]);
                     $appointment->setCv($row["cv"]);
+                    $appointment->setActive($row["active"]);
 
                     $user = new User();
                     $user->setEmail($row["email"]);

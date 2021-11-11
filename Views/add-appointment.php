@@ -25,13 +25,13 @@
                 <div class="col-lg-8" style="padding-left: 0px;">
                     <div class="form-group">
                         <label for=""> <strong> Mensaje </strong> </label>
-                        <input type="text" name="message" value="" class="form-control">
+                        <input type="text" name="message" value="" class="form-control" required>
                     </div>
                 </div>
                 <div class="col-lg-4" style="padding-left: 0px;">
                     <div class="form-group">
                         <label for=""> <strong> Cargar CV </strong></label>
-                        <input type="file" name="cv" value="">
+                        <input type="file" name="cv" value="" required>
                     </div>
                 </div>
                 <div style="text-align: center; display: flex; align-items: center; justify-content: center;">

@@ -13,6 +13,7 @@
                     <th>Puesto</th>
                     <th>Email</th>
                     <th>Mensaje</th>
+                    <th>Activa</th>
                     <th colspan="2" style="text-align:center;">CV</th>
                 </tr>
                 </thead>
@@ -25,6 +26,13 @@
                     <td><?php echo $value->getJobOffer()->getJobPosition()->getDescription() ?></td>
                     <td><?php echo $value->getStudent()->getEmail() ?></td> 
                     <td><?php echo $value->getMessage() ?></td> 
+                    <td><?php 
+                        if ($value->getActive() == 0){
+                            echo "No";
+                        } else {
+                            echo "Si";
+                        }
+                    ?></td> 
                     <td> <a href=" <?php echo FRONT_ROOT ?>Appointment/ShowFile?name=<?php echo $value->getCv()?>">Ver</a></td>
                     <td> <a href=" <?php echo FRONT_ROOT ?>Appointment/ShowDownload?name=<?php echo $value->getCv()?>">Descargar</a></td>
                 </tr>

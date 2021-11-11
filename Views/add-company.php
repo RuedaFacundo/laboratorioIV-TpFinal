@@ -11,25 +11,25 @@
                     <div class="col-lg-4">
                         <div class="form-group">
                                 <label for="">Razon Social</label>
-                                <input type="text" name="name" value="" class="form-control">
+                                <input type="text" name="name" value="" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
                                 <label for="">Cuit</label>
-                                <input type="number" name="cuit" value="" class="form-control">
+                                <input type="number" name="cuit" value="" min="1" max="999999999999" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
                                 <label for="">Adress</label>
-                                <input type="text" name="adress" value="" class="form-control">
+                                <input type="text" name="adress" value="" class="form-control" required>
                         </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="form-group">
                                 <label for="">Founded</label>
-                                <input type="date" name="founded" value="" id="datefield" class="form-control">
+                                <input type="date" name="founded" value="" id="datefield" class="form-control" required>
                         </div>
                     </div>
                 </div>

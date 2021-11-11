@@ -25,7 +25,7 @@
                     <td><?php echo $studentApi->getFirstName() ?></td>
                     <td><?php echo $studentApi->getLastName() ?></td>
                     <td><?php echo $studentApi->getEmail() ?></td>
-                    <td><?php echo $career[0]['description'] ?></td>
+                    <td><?php echo $career->getDescription() ?></td>
                 </tr>
                 <?php                              
                     }

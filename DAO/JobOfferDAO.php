@@ -254,6 +254,49 @@
                 echo "<script> if(alert('No se pudo listar las ofertas laborales')); </script>";
             }
         }
+
+        public function GetOfferById($id)
+        {
+            try
+            {
+                $jobOfferList = array();
+
+                $query = "SELECT jo.jobOfferId, jo.projectDescription, jo.skills, jo.salary, jo.remote, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId INNER JOIN ". $this->tableCareer. " car on car.careerId = jp.careerId
+                WHERE (jo.jobOfferId = :id)";
+
+                $parameters['id']=$id;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query, $parameters);
+                
+                foreach ($resultSet as $row)
+                {            
+                    $jobOffer = new JobOffer();
+                    $jobOffer->setJobOfferId($row["jobOfferId"]);
+                    $jobOffer->setProjectDescription($row["projectDescription"]);
+                    $jobOffer->setSalary($row["salary"]);
+                    $jobOffer->setRemote($row["remote"]);
+                    $jobOffer->setSkills($row["skills"]);
+
+                    $jobPosition = new JobPosition();
+                    $jobPosition->setDescription($row["description"]);
+                    $jobOffer->setJobPosition($jobPosition);
+
+                    $company = new Company();
+                    $company->setName($row["name"]);
+                    $jobOffer->setCompany($company);
+
+                    array_push($jobOfferList, $jobOffer);
+                }
+
+                return $jobOfferList[0];
+            }
+            catch(\PDOException $ex)
+            {
+                echo "<script> if(alert('No se pudo listar las ofertas laborales')); </script>";
+            }
+        }
         
     }
 ?>

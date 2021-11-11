@@ -131,7 +131,7 @@
                     array_push($careerList, $career);
                 }
 
-                return $careerList;
+                return $careerList[0];
             }
             catch(\PDOException $ex)
             {

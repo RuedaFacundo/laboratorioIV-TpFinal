@@ -61,7 +61,7 @@
 
         public function ShowListStudent()
         {
-            $student = $this->UserDAO->GetApiByEmail($_SESSION['loggedUser'][0]->getEmail());
+            $student = $this->UserDAO->GetApiByEmail($_SESSION['loggedUser']->getEmail());
             $jobOfferList = $this->jobOfferDAO->GetJobOfferStudent($student->getCareerId());
 
             require_once(VIEWS_PATH."jobOffer-listStudent.php");

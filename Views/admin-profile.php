@@ -8,7 +8,7 @@
             <main class="d-flex align-items-center justify-content-center height-100">
             <div class="content">
                 <header class="text-center">
-                    <h2>Bienvenido <?php echo $_SESSION['loggedUser'][0]->getEmail() ?> !!</h2>
+                    <h2>Bienvenido <?php echo $_SESSION['loggedUser']->getEmail() ?> !!</h2>
                 </header>
                 <div class="login-form bg-dark-alpha text-white" style="height: 200px; display: flex; align-items: center; justify-content: center;">
                     <p style="padding: 10px;">

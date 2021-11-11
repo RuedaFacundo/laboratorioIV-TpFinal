@@ -3,7 +3,7 @@
         <strong><a class="nav-link" data-bs-toggle="" href="" role="button" aria-expanded="false" style="color: rgba(255,255,255,.5);">Perfil</a></strong>
     </span> -->
     <span class="nav-item">
-        <strong class="nav-link" data-bs-toggle="" href="" role="button" aria-expanded="false" style="color: rgba(255,255,255,.5);">Perfil</strong>
+        <strong class="nav-link" data-bs-toggle="" href="" role="button" aria-expanded="false" style="color: rgba(255,255,255,.5);">UTN</strong>
     </span> 
 
     <ul class="navbar-nav ml-auto">

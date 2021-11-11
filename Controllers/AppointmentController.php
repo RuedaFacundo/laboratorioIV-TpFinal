@@ -4,6 +4,9 @@
     use DAO\AppointmentDAO as AppointmentDAO;
     use Models\Appointment as Appointment;
     use DAO\UserDAO as UserDAO;
+    use DAO\CareerDAO as CareerDAO;
+    use DAO\JobOfferDAO as JobOfferDAO;
+    use Models\Career as Career;
     use Models\User as User;
     use Models\JobOffer as JobOffer;
 
@@ -11,17 +14,21 @@
     {
         private $appointmentDAO;
         private $userDAO;
+        private $careerDAO;
+        private $jobOfferDAO;
 
         public function __construct()
         {
             $this->appointmentDAO = new AppointmentDAO();
             $this->userDAO = new UserDAO;
+            $this->careerDAO = new CareerDAO;
+            $this->jobOfferDAO = new JobOfferDAO;
         }
 
         public function showAddView($jobOfferId, $company, $jobPosition )
         {
-            $appointmentList = $this->appointmentDAO->GetByIdStudent($_SESSION['loggedUser'][0]->getStudentId());
-            if($appointmentList){
+            $appointmentList = $this->appointmentDAO->GetByIdStudent($_SESSION['loggedUser']->getStudentId());
+            if($this->validateAppointment($appointmentList) == true){
                 echo "<script> if(alert('Se encuentra postulado en una oferta activa')); </script>";
                 require_once(VIEWS_PATH."appointment.php");
             } else {
@@ -47,10 +54,13 @@
 
         public function ShowAppointment()
         {
-            $appointmentList = $this->appointmentDAO->GetByIdStudent($_SESSION['loggedUser'][0]->getStudentId());
+            $appointmentList = $this->appointmentDAO->GetByIdStudent($_SESSION['loggedUser']->getStudentId());
             if ($appointmentList){
                 require_once(VIEWS_PATH."appointment.php");
             } else {
+                echo "<script> if(alert('No tiene postulaciones realizadas')); </script>";
+                $studentApi = $this->userDAO->GetApiByEmail($_SESSION['loggedUser']->getEmail());
+                $career =  $this->careerDAO->getById($studentApi->getCareerId());
                 require_once(VIEWS_PATH."student-profile.php");
             }
         }
@@ -60,16 +70,15 @@
             $file = $this->Upload($cv);
             
             $student = new User();
-            $student->setStudentId($_SESSION['loggedUser'][0]->getStudentId());
+            $student = $this->userDAO->GetUserByEmail($_SESSION['loggedUser']->getEmail());
             $jobOffer = new JobOffer ();
-            $jobOffer->setJobOfferId($id);
-            
+            $jobOffer = $this->jobOfferDAO->GetOfferById($id);
             $appointment = new Appointment();
-
             $appointment->setJobOffer($jobOffer);
             $appointment->setStudent($student);
             $appointment->setMessage($message);
             $appointment->setCv($file);
+            $appointment->setActive(true);
     
             $this->appointmentDAO->Add($appointment);
 
@@ -108,5 +117,14 @@
                 echo "<script> if(alert('Ocurrió un error al intentar subir el archivo')); </script>";
             }
         }    
+
+        private function validateAppointment ($appointmentList){
+            
+            foreach($appointmentList as $value){
+                if ($value->getActive() == 1){
+                    return true;
+                }
+            }
+        }
     }
 ?>

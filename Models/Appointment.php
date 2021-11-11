@@ -7,6 +7,7 @@
         private $student;
         private $message;
         private $cv;
+        private $active;
 
         public function getJobOffer() { return $this->jobOffer; }
         public function setJobOffer(JobOffer $jobOffer) { $this->jobOffer = $jobOffer; }
@@ -16,5 +17,7 @@
         public function setMessage($message) { $this->message = $message; }
         public function getCv() { return $this->cv; }
         public function setCv($cv) { $this->cv = $cv; }
+        public function getActive() { return $this->active; }
+        public function setActive($active) { $this->active = $active; }
     }
 ?>

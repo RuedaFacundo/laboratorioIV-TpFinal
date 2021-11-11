@@ -22,8 +22,9 @@
             require_once(VIEWS_PATH."add-user.php");
         }
 
-        public function ShowProfileView($studentApi)
+        public function ShowProfileView()
         {
+            $studentApi = $this->userDAO->GetApiByEmail($_SESSION['loggedUser']->getEmail());
             $career =  $this->careerDAO->getById($studentApi->getCareerId());
             require_once(VIEWS_PATH."student-profile.php");
         }
@@ -79,10 +80,10 @@
             $studentApi = $this->userDAO->GetApiByEmail($email);
 
             if($loggedUser != NULL){
-                if($loggedUser[0]->getProfile() == 'Student') {
+                if($loggedUser->getProfile() == 'Student') {
                     if ($studentApi->getActive() == true){
                         $_SESSION['loggedUser'] = $loggedUser;
-                        $this->ShowProfileView($studentApi);
+                        $this->ShowProfileView();
                     } else {
                         require_once(VIEWS_PATH."home.php");
                     }
