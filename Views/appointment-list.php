@@ -18,15 +18,15 @@
                 </thead>
                 <tbody>
                 <?php 
-                    foreach($appointmentList as $value){                                
+                    foreach($appointmentList as $value){    
                 ?>
                 <tr>
-                    <td><?php echo $value['name'] ?></td>
-                    <td><?php echo $value['description'] ?></td>
-                    <td><?php echo $value['email'] ?></td> 
-                    <td><?php echo $value['message'] ?></td> 
-                    <td> <a href=" <?php echo FRONT_ROOT ?>Appointment/ShowFile?name=<?php echo $value['cv']?>">Ver</a></td>
-                    <td> <a href=" <?php echo FRONT_ROOT ?>Appointment/ShowDownload?name=<?php echo $value['cv']?>">Descargar</a></td>
+                    <td><?php echo $value->getJobOffer()->getCompany()->getName() ?></td>
+                    <td><?php echo $value->getJobOffer()->getJobPosition()->getDescription() ?></td>
+                    <td><?php echo $value->getStudent()->getEmail() ?></td> 
+                    <td><?php echo $value->getMessage() ?></td> 
+                    <td> <a href=" <?php echo FRONT_ROOT ?>Appointment/ShowFile?name=<?php echo $value->getCv()?>">Ver</a></td>
+                    <td> <a href=" <?php echo FRONT_ROOT ?>Appointment/ShowDownload?name=<?php echo $value->getCv()?>">Descargar</a></td>
                 </tr>
                 <?php                              
                     }

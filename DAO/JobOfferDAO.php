@@ -5,6 +5,9 @@
     use \Exception as Exception;
     use DAO\IJobOfferDAO as IJobOfferDAO;
     use DAO\Connection as Connection;
+    use Models\User as User;
+    use Models\JobPosition as JobPosition;
+    use Models\Company as Company;
 
     class JobOfferDAO implements IJobOfferDAO
     {
@@ -20,8 +23,8 @@
             {
                 $query = "INSERT INTO ".$this->tableName." (jobPositionId, copmanyId, datePublished, remote, salary, skills, projectDescription, active) VALUES (:jobPositionId, :copmanyId, :datePublished, :remote, :salary, :skills, :projectDescription, :active);";
                 
-                $parameters["jobPositionId"] = $jobOffer->getJobPositionId();
-                $parameters["copmanyId"] = $jobOffer->getCompanyId();
+                $parameters["jobPositionId"] = $jobOffer->getJobPosition()->getJobPositionId();
+                $parameters["copmanyId"] = $jobOffer->getCompany()->getCompanyId();
                 $parameters["datePublished"] = $jobOffer->getDatePublished();
                 $parameters["remote"] = $jobOffer->getRemote();
                 $parameters["salary"] = $jobOffer->getSalary();
@@ -45,22 +48,30 @@
             {
                 $jobOfferList = array();
 
-                $query = "SELECT jo.jobOfferId, jo.projectDescription, jo.salary, jo.remote, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId;";
+                $query = "SELECT jo.jobOfferId, jo.projectDescription, jo.salary, jo.skills, jo.remote, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId;";
 
                 $this->connection = Connection::GetInstance();
 
                 $resultSet = $this->connection->Execute($query);
                 
                 foreach ($resultSet as $row)
-                {                
-                    $jobOff['jobOfferId'] = $row["jobOfferId"];
-                    $jobOff['projectDescription'] = $row["projectDescription"];
-                    $jobOff['salary'] = $row["salary"];
-                    $jobOff['remote'] = $row["remote"];
-                    $jobOff['description'] = $row["description"];
-                    $jobOff['name'] = $row["name"];
+                {               
+                    $jobOffer = new JobOffer();
+                    $jobOffer->setJobOfferId($row["jobOfferId"]);
+                    $jobOffer->setProjectDescription($row["projectDescription"]);
+                    $jobOffer->setSalary($row["salary"]);
+                    $jobOffer->setRemote($row["remote"]);
+                    $jobOffer->setSkills($row["skills"]);
 
-                    array_push($jobOfferList, $jobOff);
+                    $jobPosition = new JobPosition();
+                    $jobPosition->setDescription($row["description"]);
+                    $jobOffer->setJobPosition($jobPosition);
+
+                    $company = new Company();
+                    $company->setName($row["name"]);
+                    $jobOffer->setCompany($company);
+
+                    array_push($jobOfferList, $jobOffer);
                 }
 
                 return $jobOfferList;
@@ -77,7 +88,7 @@
             {
                 $jobOfferList = array();
 
-                $query = "SELECT jo.jobOfferId, jo.projectDescription, jo.salary, jo.remote, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId WHERE (jp.careerId = :careerId)";
+                $query = "SELECT jo.jobOfferId, jo.projectDescription, jo.salary, jo.remote, jo.skills, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId WHERE (jp.careerId = :careerId)";
 
                 $parameters['careerId'] = $careerId;
 
@@ -87,14 +98,22 @@
                 
                 foreach ($resultSet as $row)
                 {             
-                    $jobOff['jobOfferId'] = $row["jobOfferId"];
-                    $jobOff['projectDescription'] = $row["projectDescription"];
-                    $jobOff['salary'] = $row["salary"];
-                    $jobOff['remote'] = $row["remote"];
-                    $jobOff['description'] = $row["description"];
-                    $jobOff['name'] = $row["name"];
+                    $jobOffer = new JobOffer();
+                    $jobOffer->setJobOfferId($row["jobOfferId"]);
+                    $jobOffer->setProjectDescription($row["projectDescription"]);
+                    $jobOffer->setSalary($row["salary"]);
+                    $jobOffer->setRemote($row["remote"]);
+                    $jobOffer->setSkills($row["skills"]);
 
-                    array_push($jobOfferList, $jobOff);
+                    $jobPosition = new JobPosition();
+                    $jobPosition->setDescription($row["description"]);
+                    $jobOffer->setJobPosition($jobPosition);
+
+                    $company = new Company();
+                    $company->setName($row["name"]);
+                    $jobOffer->setCompany($company);
+
+                    array_push($jobOfferList, $jobOffer);
                 }
 
                 return $jobOfferList;
@@ -128,11 +147,12 @@
         {
             try
             {
-                $query= "UPDATE ".$this->tableName." SET copmanyId = :copmanyId, datePublished = :datePublished, remote = :remote, salary = :salary, skills = :skills, projectDescription = :projectDescription
+                $query= "UPDATE ".$this->tableName." SET copmanyId = :copmanyId, jobPositionId = :jobPositionId,  datePublished = :datePublished, remote = :remote, salary = :salary, skills = :skills, projectDescription = :projectDescription
                 WHERE (jobOfferId = :jobOfferId)";
     
                 $parameters['jobOfferId']=$jobOffer->getJobOfferId();
-                $parameters['copmanyId']=$jobOffer->getCompanyId();
+                $parameters["jobPositionId"] = $jobOffer->getJobPosition()->getJobPositionId();
+                $parameters["copmanyId"] = $jobOffer->getCompany()->getCompanyId();
                 $parameters['datePublished']=$jobOffer->getDatePublished();
                 $parameters['remote']=$jobOffer->getRemote();
                 $parameters['salary']=$jobOffer->getSalary();
@@ -155,7 +175,7 @@
             {
                 $jobOfferList = array();
 
-                $query = "SELECT jo.jobOfferId, jo.projectDescription, jo.salary, jo.remote, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId
+                $query = "SELECT jo.jobOfferId, jo.projectDescription, jo.salary, jo.skills, jo.remote, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId
                 WHERE (jp.description = :jobPosition)";
 
                 $parameters['jobPosition']=$jobPosition;
@@ -165,15 +185,23 @@
                 $resultSet = $this->connection->Execute($query, $parameters);
                 
                 foreach ($resultSet as $row)
-                {                
-                    $jobOff['jobOfferId'] = $row["jobOfferId"];
-                    $jobOff['projectDescription'] = $row["projectDescription"];
-                    $jobOff['salary'] = $row["salary"];
-                    $jobOff['remote'] = $row["remote"];
-                    $jobOff['description'] = $row["description"];
-                    $jobOff['name'] = $row["name"];
+                {             
+                    $jobOffer = new JobOffer();
+                    $jobOffer->setJobOfferId($row["jobOfferId"]);
+                    $jobOffer->setProjectDescription($row["projectDescription"]);
+                    $jobOffer->setSalary($row["salary"]);
+                    $jobOffer->setRemote($row["remote"]);
+                    $jobOffer->setSkills($row["skills"]);
 
-                    array_push($jobOfferList, $jobOff);
+                    $jobPosition = new JobPosition();
+                    $jobPosition->setDescription($row["description"]);
+                    $jobOffer->setJobPosition($jobPosition);
+
+                    $company = new Company();
+                    $company->setName($row["name"]);
+                    $jobOffer->setCompany($company);
+
+                    array_push($jobOfferList, $jobOffer);
                 }
 
                 return $jobOfferList;
@@ -190,7 +218,7 @@
             {
                 $jobOfferList = array();
 
-                $query = "SELECT jo.jobOfferId, jo.projectDescription, jo.salary, jo.remote, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId INNER JOIN ". $this->tableCareer. " car on car.careerId = jp.careerId
+                $query = "SELECT jo.jobOfferId, jo.projectDescription, jo.skills, jo.salary, jo.remote, jp.description, c.name FROM ". $this->tableName. " jo INNER JOIN ". $this->tableJobPosition. " jp on jp.jobPositionId = jo.jobPositionId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId INNER JOIN ". $this->tableCareer. " car on car.careerId = jp.careerId
                 WHERE (car.description = :career)";
 
                 $parameters['career']=$career;
@@ -200,15 +228,23 @@
                 $resultSet = $this->connection->Execute($query, $parameters);
                 
                 foreach ($resultSet as $row)
-                {                
-                    $jobOff['jobOfferId'] = $row["jobOfferId"];
-                    $jobOff['projectDescription'] = $row["projectDescription"];
-                    $jobOff['salary'] = $row["salary"];
-                    $jobOff['remote'] = $row["remote"];
-                    $jobOff['description'] = $row["description"];
-                    $jobOff['name'] = $row["name"];
+                {            
+                    $jobOffer = new JobOffer();
+                    $jobOffer->setJobOfferId($row["jobOfferId"]);
+                    $jobOffer->setProjectDescription($row["projectDescription"]);
+                    $jobOffer->setSalary($row["salary"]);
+                    $jobOffer->setRemote($row["remote"]);
+                    $jobOffer->setSkills($row["skills"]);
 
-                    array_push($jobOfferList, $jobOff);
+                    $jobPosition = new JobPosition();
+                    $jobPosition->setDescription($row["description"]);
+                    $jobOffer->setJobPosition($jobPosition);
+
+                    $company = new Company();
+                    $company->setName($row["name"]);
+                    $jobOffer->setCompany($company);
+
+                    array_push($jobOfferList, $jobOffer);
                 }
 
                 return $jobOfferList;

@@ -113,7 +113,7 @@
             try
             {
                 $careerList = array();
-                $query = "SELECT careers.description FROM ".$this->tableName. " WHERE (careerId = :careerId)";
+                $query = "SELECT * FROM ".$this->tableName. " WHERE (careerId = :careerId)";
 
                 $parameters['careerId'] = $careerId;
 
@@ -123,7 +123,10 @@
                 
                 foreach ($resultSet as $row)
                 {                
-                    $career['description'] = $row["description"];
+                    $career = new Career();
+                    $career->setCareerId($row["careerId"]);
+                    $career->setDescription($row["description"]);
+                    $career->setActive($row["active"]);
 
                     array_push($careerList, $career);
                 }

@@ -5,6 +5,7 @@
     use Models\Appointment as Appointment;
     use DAO\UserDAO as UserDAO;
     use Models\User as User;
+    use Models\JobOffer as JobOffer;
 
     class AppointmentController
     {
@@ -58,11 +59,15 @@
         {
             $file = $this->Upload($cv);
             
-            $student = $this->userDAO->GetStudentsByEmail($_SESSION['loggedUser'][0]->getEmail());
-
+            $student = new User();
+            $student->setStudentId($_SESSION['loggedUser'][0]->getStudentId());
+            $jobOffer = new JobOffer ();
+            $jobOffer->setJobOfferId($id);
+            
             $appointment = new Appointment();
-            $appointment->setJobOfferId($id);
-            $appointment->setStudentId($student[0]->getStudentId());
+
+            $appointment->setJobOffer($jobOffer);
+            $appointment->setStudent($student);
             $appointment->setMessage($message);
             $appointment->setCv($file);
     

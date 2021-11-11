@@ -28,10 +28,15 @@
                             <select name="jobPositionId" class="form-control" aria-label="Default select example" required>
                                 <?php 
                                     foreach($jobPositionList as $value){ 
+                                        foreach($careerList as $careers){
+                                            if ($careers->getCareerId() == $value->getCareer()->getCareerId() && $careers->getActive() == 1){
+                                        
                                 ?>
                                 <option value="<?php echo $value->getJobPositionId() ?>"><?php echo $value->getDescription() ?></option>
-                                <?php                              
+                                <?php  
+                                        }                            
                                     }
+                                }
                                 ?>
                             </select>
                         </div>

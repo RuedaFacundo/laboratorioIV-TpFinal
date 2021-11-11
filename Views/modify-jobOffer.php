@@ -22,18 +22,18 @@
                     foreach($jobOfferList as $value){                                
                 ?>
                 <tr>
-                    <td><?php echo $value['jobOfferId'] ?></td>
-                    <td><?php echo $value['name'] ?></td>
-                    <td><?php echo $value['description'] ?></td>
-                    <td><?php echo $value['salary'] ?></td>
+                    <td><?php echo $value->getJobOfferId() ?></td>
+                    <td><?php echo $value->getCompany()->getName() ?></td>
+                    <td><?php echo $value->getJobPosition()->getDescription() ?></td>
+                    <td><?php echo $value->getSalary() ?></td>
                     <td><?php 
-                        if ($value['remote'] == 0){
+                        if ($value->getRemote() == 0){
                             echo "No";
                         } else {
                             echo "Si";
                         }
                     ?></td>
-                    <td><?php echo $value['projectDescription'] ?></td>
+                    <td><?php echo $value->getProjectDescription() ?></td>
                 </tr>
                 <?php                              
                     }
@@ -71,10 +71,15 @@
                             <select name="jobPositionId" class="form-control" aria-label="Default select example" required>
                                 <?php 
                                     foreach($jobPositionList as $value){ 
+                                        foreach($careerList as $careers){
+                                            if ($careers->getCareerId() == $value->getCareer()->getCareerId() && $careers->getActive() == 1){
+                                        
                                 ?>
                                 <option value="<?php echo $value->getJobPositionId() ?>"><?php echo $value->getDescription() ?></option>
-                                <?php                              
+                                <?php  
+                                        }                            
                                     }
+                                }
                                 ?>
                             </select>
                         </div>
@@ -106,7 +111,7 @@
                                 <input type="text" name="skills" value="" class="form-control" required>
                         </div>
                     </div>
-                    <div class="col-lg-12">
+                    <div class="col-lg-8">
                         <div class="form-group">
                                 <strong><label for="projectDescription">Descripcion</label></strong>
                                 <input type="text" name="projectDescription" value="" class="form-control" required>

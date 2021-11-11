@@ -13,6 +13,7 @@
                     <th>Empresa</th>
                     <th>Puesto</th>
                     <th>Salario</th>
+                    <th>Skills</th>
                     <th>Remoto</th>
                     <th>Descripcion</th>
                 </tr>
@@ -22,18 +23,19 @@
                     foreach($jobOfferList as $value){                                
                 ?>
                 <tr>
-                    <td><?php echo $value['jobOfferId'] ?></td>
-                    <td><?php echo $value['name'] ?></td>
-                    <td><?php echo $value['description'] ?></td>
-                    <td><?php echo $value['salary'] ?></td>
+                    <td><?php echo $value->getJobOfferId() ?></td>
+                    <td><?php echo $value->getCompany()->getName() ?></td>
+                    <td><?php echo $value->getJobPosition()->getDescription() ?></td>
+                    <td><?php echo $value->getSalary() ?></td>
+                    <td><?php echo $value->getSkills() ?></td>
                     <td><?php 
-                        if ($value['remote'] == 0){
+                        if ($value->getRemote() == 0){
                             echo "No";
                         } else {
                             echo "Si";
                         }
                     ?></td>
-                    <td><?php echo $value['projectDescription'] ?></td>
+                    <td><?php echo $value->getProjectDescription() ?></td>
                 </tr>
                 <?php                              
                     }

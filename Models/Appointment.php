@@ -3,15 +3,15 @@
 
     class Appointment 
     {
-        private $jobOfferId;
-        private $studentId;
+        private $jobOffer;
+        private $student;
         private $message;
         private $cv;
 
-        public function getJobOfferId() { return $this->jobOfferId; }
-        public function setJobOfferId($jobOfferId) { $this->jobOfferId = $jobOfferId; }
-        public function getStudentId() { return $this->studentId; }
-        public function setStudentId($studentId) { $this->studentId = $studentId; }
+        public function getJobOffer() { return $this->jobOffer; }
+        public function setJobOffer(JobOffer $jobOffer) { $this->jobOffer = $jobOffer; }
+        public function getStudent() { return $this->student; }
+        public function setStudent(User $student) { $this->student = $student; }
         public function getMessage() { return $this->message; }
         public function setMessage($message) { $this->message = $message; }
         public function getCv() { return $this->cv; }

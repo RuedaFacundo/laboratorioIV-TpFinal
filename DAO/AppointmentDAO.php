@@ -5,6 +5,10 @@
     use DAO\Connection as Connection;
     use DAO\IAppointmentDAO as IAppointmentDAO;
     use Models\Appointment as Appointment;
+    use Models\User as User;
+    use Models\JobPosition as JobPosition;
+    use Models\Company as Company;
+    use Models\JobOffer as JobOffer;
 
     class AppointmentDAO implements IAppointmentDAO
     {
@@ -21,8 +25,8 @@
             {
                 $query = "INSERT INTO ".$this->tableName." (jobOfferId, studentId, message, cv) VALUES (:jobOfferId, :studentId, :message, :cv);";
                 
-                $parameters['jobOfferId'] = $appointment->getJobOfferId();
-                $parameters['studentId'] = $appointment->getStudentId();
+                $parameters['jobOfferId'] = $appointment->getJobOffer()->getJobOfferId();
+                $parameters['studentId'] = $appointment->getStudent()->getStudentId();
                 $parameters['message'] = $appointment->getMessage();
                 $parameters['cv'] = $appointment->getCv();
 
@@ -49,12 +53,26 @@
                 $resultSet = $this->connection->Execute($query);
                 
                 foreach ($resultSet as $row)
-                {                
-                    $appointment['name'] = $row["name"];
-                    $appointment['description'] = $row["description"];
-                    $appointment['email'] = $row["email"];
-                    $appointment['message'] = $row["message"];
-                    $appointment['cv'] = $row["cv"];
+                {
+                    $appointment = new Appointment(); 
+                    $appointment->setMessage($row["message"]);
+                    $appointment->setCv($row["cv"]);
+
+                    $user = new User();
+                    $user->setEmail($row["email"]);
+                    $appointment->setStudent($user);
+
+                    $jobOffer = new JobOffer();
+
+                    $company = new Company();
+                    $company->setName($row["name"]);
+                    $jobOffer->setCompany($company);
+
+                    $jobPosition = new JobPosition();
+                    $jobPosition->setDescription($row["description"]);
+                    $jobOffer->setJobPosition($jobPosition);
+
+                    $appointment->setJobOffer($jobOffer);
 
                     array_push($appointmentList, $appointment);
                 }
@@ -83,12 +101,26 @@
                 $resultSet = $this->connection->Execute($query, $parameters);
                 
                 foreach ($resultSet as $row)
-                {                
-                    $appointment['name'] = $row["name"];
-                    $appointment['description'] = $row["description"];
-                    $appointment['email'] = $row["email"];
-                    $appointment['message'] = $row["message"];
-                    $appointment['cv'] = $row["cv"];
+                {
+                    $appointment = new Appointment(); 
+                    $appointment->setMessage($row["message"]);
+                    $appointment->setCv($row["cv"]);
+
+                    $user = new User();
+                    $user->setEmail($row["email"]);
+                    $appointment->setStudent($user);
+
+                    $jobOffer = new JobOffer();
+
+                    $company = new Company();
+                    $company->setName($row["name"]);
+                    $jobOffer->setCompany($company);
+
+                    $jobPosition = new JobPosition();
+                    $jobPosition->setDescription($row["description"]);
+                    $jobOffer->setJobPosition($jobPosition);
+
+                    $appointment->setJobOffer($jobOffer);
 
                     array_push($appointmentList, $appointment);
                 }

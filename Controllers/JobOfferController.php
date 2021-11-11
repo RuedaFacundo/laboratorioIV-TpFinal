@@ -5,10 +5,12 @@
     use DAO\JobPositionDAO as JobPositionDAO;
     use DAO\CompanyDAO as CompanyDAO;
     use DAO\UserDAO as UserDAO;
+    use DAO\CareerDAO as CareerDAO;
     use Models\JobPosition as JobPosition;
     use Models\JobOffer as JobOffer;
     use Models\Company as Company;
     use Models\User as User;
+    use Models\Career as Career;
 
     class JobOfferController
     {
@@ -16,6 +18,7 @@
         private $JobPositionDAO;
         private $CompanyDAO;
         private $UserDAO;
+        private $CareerDAO;
 
         public function __construct()
         {
@@ -23,11 +26,13 @@
             $this->JobPositionDAO = new JobPositionDAO();
             $this->CompanyDAO = new CompanyDAO();
             $this->UserDAO = new UserDAO ();
+            $this->careerDAO = new CareerDAO();
         }
 
         public function ShowAddView()
         {
             $jobPositionList = $this->JobPositionDAO->GetAll();
+            $careerList = $this->careerDAO->GetAll();
             if($jobPositionList == null){
                 $jobPositionList = $this->JobPositionDAO->getAllApi();
             }
@@ -39,6 +44,7 @@
         {
             $jobOfferList = $this->jobOfferDAO->GetAll();
             $jobPositionList = $this->JobPositionDAO->GetAll();
+            $careerList = $this->careerDAO->GetAll();
             if($jobPositionList == null){
                 $jobPositionList = $this->JobPositionDAO->getAllApi();
             }
@@ -87,9 +93,11 @@
         {
             $jobOffer = new JobOffer();
             $company = new Company();
+            $jobPosition = new JobPosition();
             $company = $this->CompanyDAO->GetByName($nameCompany);
-            $jobOffer->setCompanyId($company[0]->getCompanyId());
-            $jobOffer->setJobPositionId($jobPositionId);
+            $jobPosition = $this->JobPositionDAO->GetById($jobPositionId);
+            $jobOffer->setCompany($company[0]);
+            $jobOffer->setJobPosition($jobPosition[0]);
             $jobOffer->setDatePublished($datePublished);
             $jobOffer->setRemote($remote);
             $jobOffer->setSalary($salary);
@@ -116,9 +124,11 @@
             $jobOffer = new JobOffer();
             $jobOffer->setJobOfferId($id);
             $company = new Company();
+            $jobPosition = new JobPosition();
             $company = $this->CompanyDAO->GetByName($nameCompany);
-            $jobOffer->setCompanyId($company[0]->getCompanyId());
-            $jobOffer->setJobPositionId($jobPositionId);
+            $jobPosition = $this->JobPositionDAO->GetById($jobPositionId);
+            $jobOffer->setCompany($company[0]);
+            $jobOffer->setJobPosition($jobPosition[0]);
             $jobOffer->setDatePublished($datePublished);
             $jobOffer->setRemote($remote);
             $jobOffer->setSalary($salary);

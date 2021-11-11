@@ -4,8 +4,8 @@
     class JobOffer
     {
         private $jobOfferId;
-        private $jobPositionId;
-        private $companyId;
+        private $jobPosition;
+        private $company;
         private $datePublished;
         private $remote;
         private $salary;
@@ -15,10 +15,10 @@
 
         public function getJobOfferId() { return $this->jobOfferId; }
         public function setJobOfferId($jobOfferId) { $this->jobOfferId = $jobOfferId; }
-        public function getJobPositionId() { return $this->jobPositionId; }
-        public function setJobPositionId($jobPositionId) { $this->jobPositionId = $jobPositionId; }
-        public function getCompanyId() { return $this->companyId; }
-        public function setCompanyId($companyId) { $this->companyId = $companyId; }
+        public function getJobPosition() { return $this->jobPosition; }
+        public function setJobPosition(JobPosition $jobPosition) { $this->jobPosition = $jobPosition; }
+        public function getCompany() { return $this->company; }
+        public function setCompany(Company $company) { $this->company = $company; }
         public function getDatePublished() { return $this->datePublished; }
         public function setDatePublished($datePublished) { $this->datePublished = $datePublished; }
         public function getRemote() { return $this->remote; }
