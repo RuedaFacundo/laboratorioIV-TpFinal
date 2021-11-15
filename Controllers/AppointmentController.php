@@ -126,5 +126,20 @@
                 }
             }
         }
+
+        public function Cancel ($id)
+        {
+            try {
+                $this->appointmentDAO->Disable($id);
+            } catch (Exception $e) {
+                echo "<script> if(alert('No se pudo desactivar la postulacion')); </script>"; 
+            }
+
+            if ($_SESSION['loggedUser']->getProfile() == 'Student'){
+                $this->ShowAppointment();
+            } else {
+                $this->showListView();
+            }
+        }
     }
 ?>

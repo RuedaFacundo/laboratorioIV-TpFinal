@@ -26,15 +26,16 @@
                     <td><?php echo $value->getJobOffer()->getJobPosition()->getDescription() ?></td>
                     <td><?php echo $value->getStudent()->getEmail() ?></td> 
                     <td><?php echo $value->getMessage() ?></td> 
-                    <td><?php 
+                    <td style="min-width: 140px;"><?php 
                         if ($value->getActive() == 0){
                             echo "No";
                         } else {
                             echo "Si";
+                            ?> <a href=" <?php echo FRONT_ROOT ?>Appointment/Cancel?id=<?php echo $value->getAppointmentId()[0]?>"> <button type="button" class="btn btn-outline-info">Anular</button></a> <?php
                         }
                     ?></td> 
-                    <td> <a href=" <?php echo FRONT_ROOT ?>Appointment/ShowFile?name=<?php echo $value->getCv()?>">Ver</a></td>
-                    <td> <a href=" <?php echo FRONT_ROOT ?>Appointment/ShowDownload?name=<?php echo $value->getCv()?>">Descargar</a></td>
+                    <td> <a style="color: #17a2b8;" href=" <?php echo FRONT_ROOT ?>Appointment/ShowFile?name=<?php echo $value->getCv()?>">Ver</a></td>
+                    <td> <a style="color: #17a2b8;" href=" <?php echo FRONT_ROOT ?>Appointment/ShowDownload?name=<?php echo $value->getCv()?>">Descargar</a></td>
                 </tr>
                 <?php                              
                     }
@@ -48,4 +49,4 @@
     } else {
         require_once(VIEWS_PATH."home.php");
     }
-?>
+?> 

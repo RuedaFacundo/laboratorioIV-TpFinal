@@ -47,7 +47,7 @@
             {
                 $appointmentList = array();
 
-                $query = "SELECT ap.message, ap.cv, ap.active, u.email, jp.description, c.name FROM ".$this->tableName. " ap INNER JOIN ". $this->tableUsers. " u on u.userId = ap.studentId INNER JOIN ". $this->tableJobOffer. " jo on jo.jobOfferId = ap.jobOfferId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId INNER JOIN ". $this->tablePosition. " jp on jp.jobPositionId = jo.jobPositionId";
+                $query = "SELECT ap.appointmentId, ap.message, ap.cv, ap.active, u.email, jp.description, c.name FROM ".$this->tableName. " ap INNER JOIN ". $this->tableUsers. " u on u.userId = ap.studentId INNER JOIN ". $this->tableJobOffer. " jo on jo.jobOfferId = ap.jobOfferId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId INNER JOIN ". $this->tablePosition. " jp on jp.jobPositionId = jo.jobPositionId";
 
                 $this->connection = Connection::GetInstance();
 
@@ -56,6 +56,7 @@
                 foreach ($resultSet as $row)
                 {
                     $appointment = new Appointment(); 
+                    $appointment->setAppointmentId([$row["appointmentId"]]);
                     $appointment->setMessage($row["message"]);
                     $appointment->setCv($row["cv"]);
                     $appointment->setActive($row["active"]);
@@ -93,7 +94,7 @@
             {
                 $appointmentList = array();
 
-                $query = "SELECT ap.message, ap.cv, ap.active, u.email, jp.description, c.name FROM ".$this->tableName. " ap INNER JOIN ". $this->tableUsers. " u on u.userId = ap.studentId INNER JOIN ". $this->tableJobOffer. " jo on jo.jobOfferId = ap.jobOfferId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId INNER JOIN ". $this->tablePosition. " jp on jp.jobPositionId = jo.jobPositionId
+                $query = "SELECT ap.appointmentId, ap.message, ap.cv, ap.active, u.email, jp.description, c.name FROM ".$this->tableName. " ap INNER JOIN ". $this->tableUsers. " u on u.userId = ap.studentId INNER JOIN ". $this->tableJobOffer. " jo on jo.jobOfferId = ap.jobOfferId INNER JOIN ". $this->tableCompany. " c on c.copmanyId = jo.copmanyId INNER JOIN ". $this->tablePosition. " jp on jp.jobPositionId = jo.jobPositionId
                 WHERE (u.userId = :idStudent)";
 
                 $parameters["idStudent"] =  $idStudent;
@@ -105,6 +106,7 @@
                 foreach ($resultSet as $row)
                 {
                     $appointment = new Appointment(); 
+                    $appointment->setAppointmentId([$row["appointmentId"]]);
                     $appointment->setMessage($row["message"]);
                     $appointment->setCv($row["cv"]);
                     $appointment->setActive($row["active"]);
@@ -133,6 +135,24 @@
             catch(\PDOException $ex)
             {
                 echo "<script> if(alert('No tiene postulaciones realizadas')); </script>";
+            }
+        }
+
+        public function Disable ($id)
+        {
+            try
+            {
+                $query= "UPDATE ".$this->tableName." SET active = 0 WHERE (appointmentId = :id)";
+    
+                $parameters['id']= $id;
+    
+                $this->connection = Connection::GetInstance();
+    
+                $count= $this->connection->ExecuteNonQuery($query, $parameters);
+            }
+            catch(\Exception $ex)
+            {
+                throw $ex;  
             }
         }
     }

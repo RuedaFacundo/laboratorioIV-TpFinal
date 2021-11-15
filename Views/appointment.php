@@ -31,10 +31,11 @@
                             echo "No";
                         } else {
                             echo "Si";
+                            ?> <a href=" <?php echo FRONT_ROOT ?>Appointment/Cancel?id=<?php echo $value->getAppointmentId()[0]?>"> <button type="button" class="btn btn-outline-info">Anular</button></a> <?php
                         }
                     ?></td> 
-                    <td> <a href=" <?php echo FRONT_ROOT ?>Appointment/ShowFile?name=<?php echo $value->getCv()?>">Ver</a></td>
-                    <td> <a href=" <?php echo FRONT_ROOT ?>Appointment/ShowDownload?name=<?php echo $value->getCv()?>">Descargar</a></td>
+                    <td> <a style="color: #17a2b8;" href=" <?php echo FRONT_ROOT ?>Appointment/ShowFile?name=<?php echo $value->getCv()?>">Ver</a></td>
+                    <td> <a style="color: #17a2b8;" href=" <?php echo FRONT_ROOT ?>Appointment/ShowDownload?name=<?php echo $value->getCv()?>">Descargar</a></td>
                 </tr>
                 <?php                              
                     }

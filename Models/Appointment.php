@@ -3,12 +3,15 @@
 
     class Appointment 
     {
+        private $appointmentId;
         private $jobOffer;
         private $student;
         private $message;
         private $cv;
         private $active;
 
+        public function getAppointmentId() { return $this->appointmentId; }
+        public function setAppointmentId($appointmentId) { $this->appointmentId = $appointmentId; }
         public function getJobOffer() { return $this->jobOffer; }
         public function setJobOffer(JobOffer $jobOffer) { $this->jobOffer = $jobOffer; }
         public function getStudent() { return $this->student; }
