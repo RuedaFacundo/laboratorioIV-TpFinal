@@ -7,5 +7,7 @@
     {
         function Add(Appointment $appointment);
         function GetAll ();
+        public function Disable ($id);
+        public function GetByIdStudent($idStudent);
     }
 ?>

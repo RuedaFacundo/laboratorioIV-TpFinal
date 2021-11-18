@@ -11,5 +11,6 @@
         function remove($cuit);
         function modify(Company $company);
         function GetByName($name);
+        public function GetByEmail($email);
     }
 ?>

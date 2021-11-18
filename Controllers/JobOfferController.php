@@ -40,6 +40,16 @@
             require_once(VIEWS_PATH."add-jobOffer.php");
         }
 
+        public function ShowAddViewCompany()
+        {
+            $jobPositionList = $this->JobPositionDAO->GetAll();
+            $careerList = $this->careerDAO->GetAll();
+            if($jobPositionList == null){
+                $jobPositionList = $this->JobPositionDAO->getAllApi();
+            }
+            require_once(VIEWS_PATH."add-jobOfferCompany.php");
+        }
+
         public function ShowModifyView()
         {
             $jobOfferList = $this->jobOfferDAO->GetAll();
@@ -89,6 +99,17 @@
             }
         }
 
+        public function ShowListOffersByCompany()
+        {
+            $jobOfferList = $this->jobOfferDAO->GetOffersByCompany($_SESSION['loggedUser']->getEmail());
+            if($jobOfferList){
+                require_once(VIEWS_PATH."jobOffer-listFilter.php");
+            } else {
+                echo "<script> if(alert('No se encontraron ofertas laborales de la carrera ingresada')); </script>";
+                $this->ShowAddViewCompany();
+            }
+        }
+
         public function Add($nameCompany, $jobPositionId, $datePublished, $remote, $salary, $skills, $projectDescription)
         {
             $jobOffer = new JobOffer();
@@ -108,6 +129,27 @@
             $this->jobOfferDAO->Add($jobOffer);
 
             $this->ShowAddView();
+        }
+
+        public function AddByCompany($emailCompany, $jobPositionId, $datePublished, $remote, $salary, $skills, $projectDescription)
+        {
+            $jobOffer = new JobOffer();
+            $company = new Company();
+            $jobPosition = new JobPosition();
+            $company = $this->CompanyDAO->GetByEmail($emailCompany);
+            $jobPosition = $this->JobPositionDAO->GetById($jobPositionId);
+            $jobOffer->setCompany($company[0]);
+            $jobOffer->setJobPosition($jobPosition[0]);
+            $jobOffer->setDatePublished($datePublished);
+            $jobOffer->setRemote($remote);
+            $jobOffer->setSalary($salary);
+            $jobOffer->setSkills($skills);
+            $jobOffer->setProjectDescription($projectDescription);
+            $jobOffer->setActive(true);
+
+            $this->jobOfferDAO->Add($jobOffer);
+
+            $this->ShowAddViewCompany();
         }
 
         public function Remove($id)
@@ -138,6 +180,21 @@
             $this->jobOfferDAO->modify($jobOffer);
 
             $this->ShowListView();
+        }
+
+        public function Cancel ($id)
+        {
+            try {
+                $this->jobOfferDAO->Disable($id);
+            } catch (Exception $e) {
+                echo "<script> if(alert('No se pudo desactivar la postulacion')); </script>"; 
+            }
+
+            if($_SESSION['loggedUser']->getProfile() == 'Company'){
+                $this->ShowListOffersByCompany();
+            } else if ($_SESSION['loggedUser']->getProfile() == 'Admin'){
+                $this->ShowListView();
+            }
         }
     }
 ?>

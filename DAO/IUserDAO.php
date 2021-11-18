@@ -10,5 +10,6 @@
         function GetAllApi ();
         function GetStudentsByEmail($email);
         function GetApiByEmail ($email);
+        public function GetUserByEmail($email);
     }
 ?>

@@ -8,6 +8,7 @@
         private $cuit;
         private $adress;
         private $founded;
+        private $email;
 
         public function getCompanyId() { return $this->companyId; }
         public function setCompanyId($companyId) { $this->companyId = $companyId; }
@@ -19,5 +20,7 @@
         public function setAdress($adress) { $this->adress = $adress; }
         public function getFounded() { return $this->founded; }
         public function setFounded($founded) { $this->founded = $founded; }
+        public function getEmail() { return $this->email; }
+        public function setEmail($email) { $this->email = $email; }
     }
 ?>

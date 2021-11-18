@@ -51,13 +51,14 @@
             }
         }
 
-        public function Add($name, $cuit, $adress, $founded)
+        public function Add($name, $cuit, $adress, $founded, $email)
         {
             $company = new Company();
             $company->setName($name);
             $company->setCuit($cuit);
             $company->setAdress($adress);
             $company->setFounded($founded);
+            $company->setEmail($email);
 
             $this->companyDAO->Add($company);
 
@@ -80,6 +81,7 @@
             $companyModify->setCuit($cuit);
             $companyModify->setAdress($adress);
             $companyModify->setFounded($founded);
+            $companyModify->setEmail($email);
 
             $companyModified = $this->companyDAO->modify($companyModify);
 

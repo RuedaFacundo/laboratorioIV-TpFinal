@@ -16,6 +16,7 @@
                     <th>Skills</th>
                     <th>Remoto</th>
                     <th>Descripcion</th>
+                    <th>Activa</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -36,6 +37,14 @@
                         }
                     ?></td>
                     <td><?php echo $value->getProjectDescription() ?></td>
+                    <td style="min-width: 140px;"><?php 
+                        if ($value->getActive() == 0){
+                            echo "No";
+                        } else {
+                            echo "Si";
+                            ?> <a href=" <?php echo FRONT_ROOT ?>JobOffer/Cancel?id=<?php echo $value->getJobOfferId()?>"> <button type="button" class="btn btn-outline-info">Anular</button></a> <?php
+                        }
+                    ?></td>
                 </tr>
                 <?php                              
                     }

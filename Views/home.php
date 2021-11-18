@@ -17,6 +17,7 @@
                         <input type="password" name="password" class="form-control form-control-lg" placeholder="Ingresar constrase&ntilde;a">
                 </div>
                 <button class="btn btn-dark btn-block btn-lg" type="submit">Iniciar Sesi&oacute;n</button>
+                <a href="<?php echo FRONT_ROOT ?>User/ShowAddCompany" style="text-decoration: none; color:  white; text-align: center; padding-left: 45px;">Si es una empresa, haga click aqui</a>
             </form>
             <div style="margin-top: 20px">
                     <form action="<?php echo FRONT_ROOT ?>User/ShowRegisterView" method="POST" class="login-form bg-dark-alpha p-5 text-white">

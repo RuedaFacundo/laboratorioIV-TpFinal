@@ -15,12 +15,13 @@
         {
             try
             {
-                $query = "INSERT INTO ".$this->tableName." (name, cuit, adress, founded) VALUES (:name, :cuit, :adress, :founded);";
+                $query = "INSERT INTO ".$this->tableName." (name, cuit, adress, founded, email) VALUES (:name, :cuit, :adress, :founded, :email);";
                 
                 $parameters["name"] = $company->getName();
                 $parameters["cuit"] = $company->getCuit();
                 $parameters["adress"] = $company->getAdress();
                 $parameters["founded"] = $company->getFounded();
+                $parameters["email"] = $company->getEmail();
 
                 $this->connection = Connection::GetInstance();
 
@@ -51,6 +52,7 @@
                     $company->setCuit($row["cuit"]);
                     $company->setAdress($row["adress"]);
                     $company->setFounded($row["founded"]);
+                    $company->setEmail($row["email"]);
 
                     array_push($companyList, $company);
                 }
@@ -85,6 +87,7 @@
                     $company->setCuit($row["cuit"]);
                     $company->setAdress($row["adress"]);
                     $company->setFounded($row["founded"]);
+                    $company->setEmail($row["email"]);
 
                     array_push($companyList, $company);
                 }
@@ -93,7 +96,45 @@
             }
             catch(\Exception $ex)
             {
-                echo "<script> if(alert('No se encontro la empresa')); </script>";
+                //echo "<script> if(alert('No se encontro la empresa')); </script>";
+                throw  $ex;
+                
+            }
+        }
+
+        public function GetByEmail($email)
+        {
+            try
+            {
+                $companyList = array();
+                $query = "SELECT * FROM ".$this->tableName. " WHERE (email = :email)";
+
+                $parameters['email'] = $email;
+
+                $this->connection = Connection::GetInstance();
+
+                $resultSet = $this->connection->Execute($query, $parameters);
+                
+                foreach ($resultSet as $row)
+                {                
+                    $company = new Company();
+                    $company->setCompanyId($row["copmanyId"]);
+                    $company->setName($row["name"]);
+                    $company->setCuit($row["cuit"]);
+                    $company->setAdress($row["adress"]);
+                    $company->setFounded($row["founded"]);
+                    $company->setEmail($row["email"]);
+
+                    array_push($companyList, $company);
+                }
+
+                return $companyList;
+            }
+            catch(\Exception $ex)
+            {
+                //echo "<script> if(alert('No se encontro la empresa')); </script>";
+                throw  $ex;
+                
             }
         }
 
@@ -119,13 +160,14 @@
         {
             try
             {
-                $query= "UPDATE ".$this->tableName." SET name = :name, cuit = :cuit, adress = :adress, founded = :founded
+                $query= "UPDATE ".$this->tableName." SET name = :name, cuit = :cuit, adress = :adress, founded = :founded, email = :email
                 WHERE (cuit = :cuit)";
     
                 $parameters['name']=$company->getName();
                 $parameters['cuit']=$company->getCuit();
                 $parameters['adress']=$company->getAdress();
                 $parameters['founded']=$company->getFounded();
+                $parameters['email']=$company->getEmail();
     
                 $this->connection = Connection::GetInstance();
     
