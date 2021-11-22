@@ -37,7 +37,7 @@
             }
             catch(Exception $ex)
             {
-                echo "<script> if(alert('No se pudo realizar la postulacion')); </script>";
+                throw $ex;                
             }
         }
 
@@ -84,7 +84,7 @@
             }
             catch(\PDOException $ex)
             {
-                echo "<script> if(alert('No se pudo consultar las postulaciones')); </script>";
+                throw $ex;
             }
         }
 
@@ -134,7 +134,7 @@
             }
             catch(\PDOException $ex)
             {
-                echo "<script> if(alert('No tiene postulaciones realizadas')); </script>";
+                throw $ex;
             }
         }
 

@@ -65,6 +65,11 @@
             }
         }
 
+        public function SendEmail()
+        {
+            require_once(VIEWS_PATH."email.php");
+        }
+
         public function Add($id, $message, $cv)
         {
             $file = $this->Upload($cv);
@@ -79,8 +84,12 @@
             $appointment->setMessage($message);
             $appointment->setCv($file);
             $appointment->setActive(true);
-    
-            $this->appointmentDAO->Add($appointment);
+
+            try {
+                $this->appointmentDAO->Add($appointment);
+            } catch (Exception $e){
+                echo "<script> if(alert('No se pudo realizar la postulacion')); </script>";
+            }
 
             $this->ShowAppointment();
         }
@@ -131,6 +140,7 @@
         {
             try {
                 $this->appointmentDAO->Disable($id);
+                $this->SendEmail();
             } catch (Exception $e) {
                 echo "<script> if(alert('No se pudo desactivar la postulacion')); </script>"; 
             }

@@ -84,7 +84,7 @@
             }
             catch(\PDOException $ex)
             {
-                echo "<script> if(alert('No se pudo agregar el usuario')); </script>";
+                throw $ex;
             }
         }
         
@@ -114,7 +114,7 @@
             }
             catch(\PDOException $ex)
             {
-                echo "<script> if(alert('No se pudo listar los estudiantes registrados')); </script>";
+                throw $ex;
             }
         }
 
@@ -147,7 +147,7 @@
             }
             catch(\PDOException $ex)
             {
-                echo "<script> if(alert('No se encontro el usuario registrado')); </script>";
+                throw $ex;
             }
         }
 
@@ -192,7 +192,7 @@
             }
             catch(\PDOException $ex)
             {
-                echo "<script> if(alert('No se encontro el estudiante por email')); </script>";
+                throw $ex;
             }
         }
     }

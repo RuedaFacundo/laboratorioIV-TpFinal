@@ -60,7 +60,11 @@
             $company->setFounded($founded);
             $company->setEmail($email);
 
-            $this->companyDAO->Add($company);
+            try {
+                $this->companyDAO->Add($company);
+            } catch (Exception $e){
+                echo "<script> if(alert('No se pudo agregar la empresa')); </script>";
+            }
 
             $this->ShowAddView();
         }

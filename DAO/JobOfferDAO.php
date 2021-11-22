@@ -38,7 +38,7 @@
             }
             catch(\PDOException $ex)
             {
-                echo "<script> if(alert('No se pudo agregar la oferta laboral')); </script>";
+                throw $ex;
             }
         }
 
@@ -79,7 +79,7 @@
             }
             catch(\PDOException $ex)
             {
-                echo "<script> if(alert('No se pudo listar las ofertas laborales')); </script>";
+                throw $ex;
             }
         }
 
@@ -122,7 +122,7 @@
             }
             catch(\PDOException $ex)
             {
-                echo "<script> if(alert('No se pudo listar las ofertas laborales')); </script>";
+                throw $ex;
             }
         }
 
@@ -141,7 +141,7 @@
             }
             catch(\PDOException $ex)
             {
-                echo "<script> if(alert('No se pudo eliminar la oferta laboral')); </script>";
+                throw $ex;
             }
         }
 
@@ -167,7 +167,7 @@
             }
             catch(\PDOException $ex)
             {
-                echo "<script> if(alert('No se pudo modificar la oferta laboral')); </script>";
+                throw $ex;
             }
         }
 
@@ -211,7 +211,7 @@
             }
             catch(\PDOException $ex)
             {
-                echo "<script> if(alert('No se pudo listar las ofertas laborales')); </script>";
+                throw $ex;
             }
         }
 
@@ -255,7 +255,7 @@
             }
             catch(\PDOException $ex)
             {
-                echo "<script> if(alert('No se pudo listar las ofertas laborales')); </script>";
+                throw $ex;
             }
         }
 
@@ -299,7 +299,7 @@
             }
             catch(\PDOException $ex)
             {
-                echo "<script> if(alert('No se pudo listar las ofertas laborales')); </script>";
+                throw $ex;
             }
         }
 
@@ -343,7 +343,7 @@
             }
             catch(\PDOException $ex)
             {
-                echo "<script> if(alert('No se pudo listar las ofertas laborales')); </script>";
+                throw $ex;
             }
         }
 

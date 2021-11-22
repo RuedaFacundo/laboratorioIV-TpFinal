@@ -29,7 +29,7 @@
             }
             catch(\Exception $ex)
             {
-                echo "<script> if(alert('No se pudo agregar la empresa')); </script>";
+                throw $ex;
             }
         }
 
@@ -61,7 +61,7 @@
             }
             catch(\Exception $ex)
             {
-                echo "<script> if(alert('No se pudo listar las empresas')); </script>";
+                throw $ex;
             }
         }
 
@@ -96,7 +96,6 @@
             }
             catch(\Exception $ex)
             {
-                //echo "<script> if(alert('No se encontro la empresa')); </script>";
                 throw  $ex;
                 
             }
@@ -132,7 +131,6 @@
             }
             catch(\Exception $ex)
             {
-                //echo "<script> if(alert('No se encontro la empresa')); </script>";
                 throw  $ex;
                 
             }
@@ -152,7 +150,7 @@
             }
             catch(\Exception $e)
             {
-                echo "<script> if(alert('No se pudo eliminar la empresa')); </script>";
+                throw $ex;
             }
         }
 
@@ -175,7 +173,7 @@
             }
             catch(\Exception $ex)
             {
-                echo "<script> if(alert('No se pudo modificar la empresa')); </script>";
+                throw $ex;
             }
         }
     }

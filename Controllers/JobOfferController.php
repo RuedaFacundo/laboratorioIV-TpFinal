@@ -105,7 +105,7 @@
             if($jobOfferList){
                 require_once(VIEWS_PATH."jobOffer-listFilter.php");
             } else {
-                echo "<script> if(alert('No se encontraron ofertas laborales de la carrera ingresada')); </script>";
+                echo "<script> if(alert('No se encontraron ofertas laborales de la empresa ingresada')); </script>";
                 $this->ShowAddViewCompany();
             }
         }
@@ -126,7 +126,11 @@
             $jobOffer->setProjectDescription($projectDescription);
             $jobOffer->setActive(true);
 
-            $this->jobOfferDAO->Add($jobOffer);
+            try {
+                $this->jobOfferDAO->Add($jobOffer);
+            } catch (Exception $e){
+                echo "<script> if(alert('No se pudo agregar la oferta laboral')); </script>";
+            }
 
             $this->ShowAddView();
         }
@@ -177,7 +181,11 @@
             $jobOffer->setSkills($skills);
             $jobOffer->setProjectDescription($projectDescription);
 
-            $this->jobOfferDAO->modify($jobOffer);
+            try {
+                $this->jobOfferDAO->modify($jobOffer);
+            } catch (Exception $e){
+                echo "<script> if(alert('No se pudo modificar la oferta laboral')); </script>";
+            }
 
             $this->ShowListView();
         }
